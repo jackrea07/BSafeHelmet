@@ -1,2 +1,3 @@
-2023/11/03-10:27:30.312 357c Creating DB C:\Users\28jre\OneDrive\Documents\BSafeHelmet\OnBoard\.jxbrowser.userdata\Default\Local Storage\leveldb since it was missing.
-2023/11/03-10:27:30.362 357c Reusing MANIFEST C:\Users\28jre\OneDrive\Documents\BSafeHelmet\OnBoard\.jxbrowser.userdata\Default\Local Storage\leveldb/MANIFEST-000001
+2023/11/03-11:25:27.460 7ec0 Reusing MANIFEST C:\Users\evanc\BSafeHelmet\OnBoard\.jxbrowser.userdata\Default\Local Storage\leveldb/MANIFEST-000001
+2023/11/03-11:25:27.461 7ec0 Recovering log #3
+2023/11/03-11:25:27.462 7ec0 Reusing old log C:\Users\evanc\BSafeHelmet\OnBoard\.jxbrowser.userdata\Default\Local Storage\leveldb/000003.log 
