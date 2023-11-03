@@ -8,4 +8,5 @@
 	<isElfFormat value="true"/>
 	<rts value="libc.a"/>
 	<createSlaveProjects value=""/>
+	<isTargetManual value="true"/>
 </projectOptions>
