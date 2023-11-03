@@ -141,7 +141,7 @@ void PortAIntHandler(void){
         for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
 
         // Enable condition for Trigger Pulse
-        boolTrigCondition = 1;
+        boolTrigCondition = 1;//test add
     }
 
 }
