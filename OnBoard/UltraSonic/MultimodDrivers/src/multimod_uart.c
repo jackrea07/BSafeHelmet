@@ -31,21 +31,18 @@ void UART_Init() {
     // This should have been done in lab 0, so it's just copy & paste.
     // Enable port A
 
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-
-    // Enable UART0 module
-   SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    SYSCTL_RCGCUART_R |= 0x01;
+    SYSCTL_RCGCGPIO_R |= 0x01;
 
     // Configure UART0 pins on port A
-    GPIOPinConfigure(GPIO_PA0_U0RX);
-    GPIOPinConfigure(GPIO_PA1_U0TX);
-    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIO_PORTA_DEN_R |= 0x03;
+    GPIO_PORTA_AFSEL_R |= 0x03;
+    GPIO_PORTA_PCTL_R |= 0x11;
 
-    // Set UART clock source
-    UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
 
-    // Configure UART baud rate
-    UARTStdioConfig(0, 115200, SysCtlClockGet());
+    UARTStdioConfig(0,9600,SysCtlClockGet());
+
+    SysCtlDelay(10000);
 }
 
 /********************************Public Functions***********************************/

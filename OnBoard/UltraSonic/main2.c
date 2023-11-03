@@ -42,67 +42,7 @@ void Timer0IntHandler(void);                // The prototype of the ISR for Time
 void PortAIntHandler(void);                 // Prototype for ISR of GPIO PortA
 
 /* -----------------------          Main Program        --------------------- */
-int main(void){
-    // Set the System clock to 80MHz and Enable the clock for peripherals PortA, Timer0, Timer2 and UART0
-    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
 
-    // Master interrupt enable API for all interrupts
-    IntMasterEnable();
-
-    // Configure PA0 as UART0_Rx and PA1 as UART0_Tx
-    GPIOPinConfigure(GPIO_PA0_U0RX);
-    GPIOPinConfigure(GPIO_PA1_U0TX);
-    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-    // Configure the baud rate and data setup for the UART0
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), UART0_BAUDRATE, UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE );
-    // Enable the UART0
-    UARTEnable(UART0_BASE);
-
-    // Set the PA3 port as Output. Trigger Pin
-    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
-    // Set the PA2 port as Input with a weak Pull-down. Echo Pin
-    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);
-    GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
-    // Configure and enable the Interrupt on both edges for PA2. Echo Pin
-    IntEnable(INT_GPIOA);
-    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_BOTH_EDGES);
-    GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
-
-    // Configure Timer0 to run in one-shot down-count mode
-    TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);
-    // Enable the Interrupt specific vector associated with Timer0A
-    IntEnable(INT_TIMER0A);
-    // Enables a specific event within the timer to generate an interrupt
-    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-
-    // Configure Timer2 to run in one-shot up-count mode
-    TimerConfigure(TIMER2_BASE, TIMER_CFG_ONE_SHOT_UP);
-
-    // Transmit a New Page Character to the Terminal
-    UARTCharPutNonBlocking(UART0_BASE, '\f');
-
-    uint8_t iter;
-    for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
-
-    while (1){
-        if (boolTrigCondition){
-            // Load the Timer with value for generating a  delay of 10 uS.
-            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -1);
-            // Make the Trigger Pin (PA3) High
-            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
-            // Enable the Timer0 to cause an interrupt when timeout occurs
-            TimerEnable(TIMER0_BASE, TIMER_A);
-            // Disable the condition for Trigger Pin Switching
-            boolTrigCondition = 0;
-        }
-    }
-}
-
-/* -----------------------      Function Definition     --------------------- */
 void Timer0AIntHandler(void){
     // The ISR for Timer0 Interrupt Handling
     // Clear the timer interrupt
@@ -141,7 +81,72 @@ void PortAIntHandler(void){
         for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
 
         // Enable condition for Trigger Pulse
-        boolTrigCondition = 1;//test add
+        boolTrigCondition = 1;
     }
 
 }
+int main(void){
+    // Set the System clock to 80MHz and Enable the clock for peripherals PortA, Timer0, Timer2 and UART0
+    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
+
+    // Master interrupt enable API for all interrupts
+    IntMasterDisable();
+
+    // Configure PA0 as UART0_Rx and PA1 as UART0_Tx
+    GPIOPinConfigure(GPIO_PA0_U0RX);
+    GPIOPinConfigure(GPIO_PA1_U0TX);
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    // Configure the baud rate and data setup for the UART0
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), UART0_BAUDRATE, UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE );
+    // Enable the UART0
+    UARTEnable(UART0_BASE);
+
+    // Set the PA3 port as Output. Trigger Pin
+    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
+    // Set the PA2 port as Input with a weak Pull-down. Echo Pin
+    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);
+    GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
+    // Configure and enable the Interrupt on both edges for PA2. Echo Pin
+    IntEnable(INT_GPIOA);
+    IntRegister(INT_GPIOA, PortAIntHandler);
+    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_BOTH_EDGES);
+    GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
+
+    // Configure Timer0 to run in one-shot down-count mode
+    TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);
+    // Enable the Interrupt specific vector associated with Timer0A
+    IntEnable(INT_TIMER0A);
+    IntRegister(INT_TIMER0A, Timer0AIntHandler);
+    // Enables a specific event within the timer to generate an interrupt
+    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+
+    // Configure Timer2 to run in one-shot up-count mode
+    TimerConfigure(TIMER2_BASE, TIMER_CFG_ONE_SHOT_UP);
+
+    // Transmit a New Page Character to the Terminal
+    UARTCharPutNonBlocking(UART0_BASE, '\f');
+
+    uint8_t iter;
+    IntMasterEnable();
+    for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
+
+    while (1){
+        if (boolTrigCondition){
+            // Load the Timer with value for generating a  delay of 10 uS.
+            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -1);
+            // Make the Trigger Pin (PA3) High
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
+            // Enable the Timer0 to cause an interrupt when timeout occurs
+            TimerEnable(TIMER0_BASE, TIMER_A);
+            // Disable the condition for Trigger Pin Switching
+            boolTrigCondition = 0;
+        }
+    }
+}
+
+/* -----------------------      Function Definition     --------------------- */
+
