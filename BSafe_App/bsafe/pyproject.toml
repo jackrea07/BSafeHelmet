@@ -151,6 +151,8 @@ flatpak_sdk = "org.gnome.Sdk"
 [tool.briefcase.app.bsafe.windows]
 requires = [
     "toga-winforms~=0.3.1",
+    "folium",
+    "tornado",
 ]
 
 # Mobile deployments
