@@ -35,7 +35,7 @@ volatile bool boolTrigCondition = 1;        // Variable to control the Trigger P
 volatile uint32_t ui32EchoDuration = 0;     // Variable to store duration for which Echo Pin is high
 volatile uint32_t ui32ObstacleDist = 0;     // Variable to store distance of the Obstacle
 
-uint8_t ui8WelcomeText[] = {"Object Detected\n"};
+uint8_t ui8WelcomeText[] = {"\n\rDistance: "};
 //uint8_t itworked[] = {"\nit worked"};
 /* -----------------------      Function Prototypes     --------------------- */
 void Timer0IntHandler(void);                // The prototype of the ISR for Timer0 Interrupt
@@ -77,7 +77,7 @@ void PortAIntHandler(void){
 
         // Transmit the distance reading to the terminal
         uint8_t iter;
-        //for (iter = 0; iter<sizeof(chArrayDistance); iter++ ) UARTCharPut(UART0_BASE, chArrayDistance[iter]);
+        for (iter = 0; iter<sizeof(chArrayDistance); iter++ ) UARTCharPut(UART0_BASE, chArrayDistance[iter]);
         for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
 
         // Enable condition for Trigger Pulse
@@ -144,6 +144,7 @@ int main(void){
             TimerEnable(TIMER0_BASE, TIMER_A);
             // Disable the condition for Trigger Pin Switching
             boolTrigCondition = 0;
+            //for (iter = 0; iter<sizeof(itworked); iter++ ) UARTCharPut(UART0_BASE, itworked[iter]);
         }
     }
 }

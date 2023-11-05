@@ -1,4 +1,4 @@
-"./PreAlphaDemoIMU.obj"
+"./main2.obj"
 "./threads.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./G8RTOS/src/G8RTOS_CriticalSection.obj"
