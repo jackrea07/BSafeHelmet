@@ -1,4 +1,4 @@
-"./main2.obj"
+"./PreAlphaDemo.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./MultimodDrivers/src/multimod_BMI160.obj"
 "./MultimodDrivers/src/multimod_LaunchpadButtons.obj"
@@ -45,5 +45,6 @@
 "./driverlib/udma.obj"
 "./driverlib/usb.obj"
 "./driverlib/watchdog.obj"
-"../tm4c123gh6pm.cmd"
+"../driverlib/ccs/Debug/driverlib.lib"
+"../driverlib/rvmdk/driverlib.lib"
 -llibc.a

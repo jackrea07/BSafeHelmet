@@ -4,13 +4,13 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS
+CG_TOOL_ROOT := C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./main2.obj" \
+"./PreAlphaDemo.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./MultimodDrivers/src/multimod_BMI160.obj" \
 "./MultimodDrivers/src/multimod_LaunchpadButtons.obj" \
@@ -57,7 +57,8 @@ ORDERED_OBJS += \
 "./driverlib/udma.obj" \
 "./driverlib/usb.obj" \
 "./driverlib/watchdog.obj" \
-"../tm4c123gh6pm.cmd" \
+"../driverlib/ccs/Debug/driverlib.lib" \
+"../driverlib/rvmdk/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -71,9 +72,17 @@ RMDIR := RMDIR /S/Q
 -include subdir_vars.mk
 -include MultimodDrivers/src/subdir_vars.mk
 -include driverlib/subdir_vars.mk
+-include driverlib/ccs/Debug/subdir_vars.mk
+-include driverlib/ewarm/Exe/subdir_vars.mk
+-include driverlib/gcc/subdir_vars.mk
+-include driverlib/rvmdk/subdir_vars.mk
 -include subdir_rules.mk
 -include MultimodDrivers/src/subdir_rules.mk
 -include driverlib/subdir_rules.mk
+-include driverlib/ccs/Debug/subdir_rules.mk
+-include driverlib/ewarm/Exe/subdir_rules.mk
+-include driverlib/gcc/subdir_rules.mk
+-include driverlib/rvmdk/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -177,24 +186,24 @@ EXE_OUTPUTS__QUOTED += \
 
 
 # All Target
-all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+all: $(OBJS) $(LIB_SRCS) $(A_SRCS) $(GEN_CMDS)
 	@$(MAKE) --no-print-directory -Onone "UltraSonic.out"
 
 # Tool invocations
-UltraSonic.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+UltraSonic.out: $(OBJS) $(LIB_SRCS) $(A_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"UltraSonic.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="UltraSonic_linkInfo.xml" --rom_model -o "UltraSonic.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"UltraSonic.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="UltraSonic_linkInfo.xml" --rom_model -o "UltraSonic.out" $(ORDERED_OBJS) $(A_SRCS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main2.obj" "tm4c123gh6pm_startup_ccs.obj" "MultimodDrivers\src\multimod_BMI160.obj" "MultimodDrivers\src\multimod_LaunchpadButtons.obj" "MultimodDrivers\src\multimod_LaunchpadLED.obj" "MultimodDrivers\src\multimod_OPT3001.obj" "MultimodDrivers\src\multimod_PCA9956b.obj" "MultimodDrivers\src\multimod_ST7789.obj" "MultimodDrivers\src\multimod_buttons.obj" "MultimodDrivers\src\multimod_i2c.obj" "MultimodDrivers\src\multimod_joystick.obj" "MultimodDrivers\src\multimod_spi.obj" "MultimodDrivers\src\multimod_uart.obj" "driverlib\adc.obj" "driverlib\aes.obj" "driverlib\can.obj" "driverlib\comp.obj" "driverlib\cpu.obj" "driverlib\crc.obj" "driverlib\des.obj" "driverlib\eeprom.obj" "driverlib\emac.obj" "driverlib\epi.obj" "driverlib\epi_workaround_ccs.obj" "driverlib\flash.obj" "driverlib\fpu.obj" "driverlib\gpio.obj" "driverlib\hibernate.obj" "driverlib\i2c.obj" "driverlib\interrupt.obj" "driverlib\lcd.obj" "driverlib\mpu.obj" "driverlib\onewire.obj" "driverlib\pwm.obj" "driverlib\qei.obj" "driverlib\shamd5.obj" 
-	-$(RM) "driverlib\ssi.obj" "driverlib\sw_crc.obj" "driverlib\sysctl.obj" "driverlib\sysexc.obj" "driverlib\systick.obj" "driverlib\timer.obj" "driverlib\uart.obj" "driverlib\uartstdio.obj" "driverlib\udma.obj" "driverlib\usb.obj" "driverlib\watchdog.obj" 
-	-$(RM) "main2.d" "tm4c123gh6pm_startup_ccs.d" "MultimodDrivers\src\multimod_BMI160.d" "MultimodDrivers\src\multimod_LaunchpadButtons.d" "MultimodDrivers\src\multimod_LaunchpadLED.d" "MultimodDrivers\src\multimod_OPT3001.d" "MultimodDrivers\src\multimod_PCA9956b.d" "MultimodDrivers\src\multimod_ST7789.d" "MultimodDrivers\src\multimod_buttons.d" "MultimodDrivers\src\multimod_i2c.d" "MultimodDrivers\src\multimod_joystick.d" "MultimodDrivers\src\multimod_spi.d" "MultimodDrivers\src\multimod_uart.d" "driverlib\adc.d" "driverlib\aes.d" "driverlib\can.d" "driverlib\comp.d" "driverlib\cpu.d" "driverlib\crc.d" "driverlib\des.d" "driverlib\eeprom.d" "driverlib\emac.d" "driverlib\epi.d" "driverlib\flash.d" "driverlib\fpu.d" "driverlib\gpio.d" "driverlib\hibernate.d" "driverlib\i2c.d" "driverlib\interrupt.d" "driverlib\lcd.d" "driverlib\mpu.d" "driverlib\onewire.d" "driverlib\pwm.d" "driverlib\qei.d" "driverlib\shamd5.d" "driverlib\ssi.d" "driverlib\sw_crc.d" "driverlib\sysctl.d" "driverlib\sysexc.d" "driverlib\systick.d" 
-	-$(RM) "driverlib\timer.d" "driverlib\uart.d" "driverlib\uartstdio.d" "driverlib\udma.d" "driverlib\usb.d" "driverlib\watchdog.d" 
+	-$(RM) "PreAlphaDemo.obj" "tm4c123gh6pm_startup_ccs.obj" "MultimodDrivers\src\multimod_BMI160.obj" "MultimodDrivers\src\multimod_LaunchpadButtons.obj" "MultimodDrivers\src\multimod_LaunchpadLED.obj" "MultimodDrivers\src\multimod_OPT3001.obj" "MultimodDrivers\src\multimod_PCA9956b.obj" "MultimodDrivers\src\multimod_ST7789.obj" "MultimodDrivers\src\multimod_buttons.obj" "MultimodDrivers\src\multimod_i2c.obj" "MultimodDrivers\src\multimod_joystick.obj" "MultimodDrivers\src\multimod_spi.obj" "MultimodDrivers\src\multimod_uart.obj" "driverlib\adc.obj" "driverlib\aes.obj" "driverlib\can.obj" "driverlib\comp.obj" "driverlib\cpu.obj" "driverlib\crc.obj" "driverlib\des.obj" "driverlib\eeprom.obj" "driverlib\emac.obj" "driverlib\epi.obj" "driverlib\epi_workaround_ccs.obj" "driverlib\flash.obj" "driverlib\fpu.obj" "driverlib\gpio.obj" "driverlib\hibernate.obj" "driverlib\i2c.obj" "driverlib\interrupt.obj" "driverlib\lcd.obj" "driverlib\mpu.obj" "driverlib\onewire.obj" "driverlib\pwm.obj" "driverlib\qei.obj" 
+	-$(RM) "driverlib\shamd5.obj" "driverlib\ssi.obj" "driverlib\sw_crc.obj" "driverlib\sysctl.obj" "driverlib\sysexc.obj" "driverlib\systick.obj" "driverlib\timer.obj" "driverlib\uart.obj" "driverlib\uartstdio.obj" "driverlib\udma.obj" "driverlib\usb.obj" "driverlib\watchdog.obj" 
+	-$(RM) "PreAlphaDemo.d" "tm4c123gh6pm_startup_ccs.d" "MultimodDrivers\src\multimod_BMI160.d" "MultimodDrivers\src\multimod_LaunchpadButtons.d" "MultimodDrivers\src\multimod_LaunchpadLED.d" "MultimodDrivers\src\multimod_OPT3001.d" "MultimodDrivers\src\multimod_PCA9956b.d" "MultimodDrivers\src\multimod_ST7789.d" "MultimodDrivers\src\multimod_buttons.d" "MultimodDrivers\src\multimod_i2c.d" "MultimodDrivers\src\multimod_joystick.d" "MultimodDrivers\src\multimod_spi.d" "MultimodDrivers\src\multimod_uart.d" "driverlib\adc.d" "driverlib\aes.d" "driverlib\can.d" "driverlib\comp.d" "driverlib\cpu.d" "driverlib\crc.d" "driverlib\des.d" "driverlib\eeprom.d" "driverlib\emac.d" "driverlib\epi.d" "driverlib\flash.d" "driverlib\fpu.d" "driverlib\gpio.d" "driverlib\hibernate.d" "driverlib\i2c.d" "driverlib\interrupt.d" "driverlib\lcd.d" "driverlib\mpu.d" "driverlib\onewire.d" "driverlib\pwm.d" "driverlib\qei.d" "driverlib\shamd5.d" "driverlib\ssi.d" "driverlib\sw_crc.d" "driverlib\sysctl.d" "driverlib\sysexc.d" 
+	-$(RM) "driverlib\systick.d" "driverlib\timer.d" "driverlib\uart.d" "driverlib\uartstdio.d" "driverlib\udma.d" "driverlib\usb.d" "driverlib\watchdog.d" 
 	-$(RM) "driverlib\epi_workaround_ccs.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
