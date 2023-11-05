@@ -36,7 +36,7 @@ volatile uint32_t ui32EchoDuration = 0;     // Variable to store duration for wh
 volatile uint32_t ui32ObstacleDist = 0;     // Variable to store distance of the Obstacle
 
 uint8_t ui8WelcomeText[] = {"\n\rDistance: "};
-
+//uint8_t itworked[] = {"\nit worked"};
 /* -----------------------      Function Prototypes     --------------------- */
 void Timer0IntHandler(void);                // The prototype of the ISR for Timer0 Interrupt
 void PortAIntHandler(void);                 // Prototype for ISR of GPIO PortA
@@ -144,6 +144,7 @@ int main(void){
             TimerEnable(TIMER0_BASE, TIMER_A);
             // Disable the condition for Trigger Pin Switching
             boolTrigCondition = 0;
+            //for (iter = 0; iter<sizeof(itworked); iter++ ) UARTCharPut(UART0_BASE, itworked[iter]);
         }
     }
 }

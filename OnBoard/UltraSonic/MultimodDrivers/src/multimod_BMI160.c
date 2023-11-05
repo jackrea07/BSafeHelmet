@@ -27,7 +27,15 @@ void BMI160_Init() {
     BMI160_WriteRegister(BMI160_CMD_ADDR,0x15);
     return;
 }
-
+void BMI160_InitAlpha() {
+    I2C_Init(I2C_A_BASE);
+    // Power on accelerometer
+    //BMI160_WriteRegister(BMI160_CMD_ADDR, 0xB6);
+    SysCtlDelay(10000);
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
+    BMI160_WriteRegister(BMI160_CMD_ADDR,0x15);
+    return;
+}
 // BMI160_Init
 // Writes to a register address in the BMI160.
 // Param uint8_t "addr": Register address
