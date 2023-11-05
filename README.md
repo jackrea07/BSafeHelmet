@@ -14,3 +14,5 @@ After researching different methods of app building, we decided to build our app
 
 
 ## Bluetooth communication
+The HC05 bluetooth module can send/recieve information over a serial port on a PC.
+The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth.
