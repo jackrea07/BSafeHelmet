@@ -1,9 +1,29 @@
+0) IF PULLING FROM GITHUB, RUN THE FOLLOWING COMMANDS
+
+Navigate to BSafeHelmet directory if necessary (Should be default)
+beeware-venv\Scripts\activate
+
+(SHOULD ENTER beeware-venv VIRTUAL ENVIRONMENT)
+
+python -m pip install briefcase
+pip install folium
+pip install tornado
+
+cd BSafe_App
+cd bsafe
+briefcase dev
+
 1) INITIALIZE ENVIRONMENT
 md Bsafe
-cd Bsafe
+cd BSafe_App
 py -m venv beeware-venv
 beeware-venv\Scripts\activate
 
+1.2) RETURN TO ENVIRONMENT
+cd BSafe_App
+py -m venv beeware-venv
+beeware-venv\Scripts\activate
+****SKIP to step 4*****
 
 2) INSTALL BEEWARE TOOLS
 python -m pip install briefcase
@@ -15,18 +35,21 @@ Fill out Name, URL, email, etc...
 
 
 4) RUN DEFAULT APP IN DEVELOPER MODE
-cd 'project_directory' (Whatever you call it)
+cd 'bsafe'
 briefcase dev
 
 
 5) MODIFY CONTENT
-open src/project_directory/app.py and make changes as necessary
+open src/bsafe/app.py and make changes as necessary
 
 
 6) CREATE APPLICATION SCAFFOLD & BUILD APPLICATION
 briefcase create
 briefcase build
 
+6.1) FOLIUM INSTALL
+pip install folium
+pip install tornado
 
 7) RUN THE APP & BUILD INSTALLER
 briefcase run
