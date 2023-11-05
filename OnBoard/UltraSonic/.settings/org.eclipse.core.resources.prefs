@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//Debug/G8RTOS/src/subdir_rules.mk=UTF-8
+encoding//Debug/G8RTOS/src/subdir_vars.mk=UTF-8
 encoding//Debug/MultimodDrivers/src/subdir_rules.mk=UTF-8
 encoding//Debug/MultimodDrivers/src/subdir_vars.mk=UTF-8
 encoding//Debug/driverlib/ccs/Debug/subdir_rules.mk=UTF-8
