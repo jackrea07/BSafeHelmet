@@ -13,6 +13,9 @@ After researching different methods of app building, we decided to build our app
 ### Known Bugs
 - GPS does not scrape real-time location. Uses placeholder coordinates for now.
 - Map has small watermark tab at the bottom and zoom buttons that shouldn't be there.
+- The navbar is not displaying the title as intended (the navigation button should appear to the left side of the title, and the title should be centered)
+- The bluetooth module (pybluez) is producing errors when attempting to import and implement it into the app.
+- There is not yet a way to reliably move between the bluetooth connection and home pages without crashing the program.
 
 ## Bluetooth communication
 The HC05 bluetooth module can send/recieve information over a serial port on a PC.
