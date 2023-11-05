@@ -11,7 +11,8 @@ After researching different methods of app building, we decided to build our app
 
 
 ### Known Bugs
-
+- GPS does not scrape real-time location. Uses placeholder coordinates for now.
+- Map has small watermark tab at the bottom and zoom buttons that shouldn't be there.
 
 ## Bluetooth communication
 The HC05 bluetooth module can send/recieve information over a serial port on a PC.
