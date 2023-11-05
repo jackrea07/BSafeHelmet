@@ -14,6 +14,21 @@ The HC05 bluetooth module can send/recieve information over a serial port on a P
 
 ## Project Architecture
 
+TIVA Launchpad (main programs and data parsing)
+- Ultrasonic Sensors to detect vehicles and objects in blindspots
+- Lights to turn on when blindspot trigger met
+- Accelerometer to aid in detecting crashes
+- Gyroscope to aid in detecting crashes
+  
+Bluetooth Module (bridge communication between mobile app and helmet hardware)
+- Send crash data to mobile phone to trigger emergency response
+- Receive audio data from phone and play through helmet speakers
+
+Mobile App (pairs to helmet via bluetooth)
+- Allows user to connect phone audio to helmet speakers for music
+- Tracks live location of user via GPS modules in phone
+- If crash detected, calls emergency response teams for help using user location
+
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
