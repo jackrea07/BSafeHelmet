@@ -63,7 +63,35 @@ class BSafeApp(toga.App):
         self.threads = []  # Initialize the threads list
 
         # Create a box for organizing components vertically and center them
-        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(140, 40, 40, 40), background_color='rgba(0, 0, 0, 0.8)', alignment='center'))
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 40, 40, 40), background_color='rgba(0, 0, 0, 0.8)', alignment='center'))
+
+        # Create a box for the navbar with increased padding at the bottom
+        # navbar_box = toga.Box(style=Pack(direction=ROW, padding=(10, 0, 20, 0), background_color='rgba(0, 0, 0, 0.8)'))
+
+        # Create a label for the title "BSafe Helmet" with updated style
+        title_label = toga.Label(
+            'BSafe Helmet',
+            style=Pack(
+                flex=1,  # Take up available space horizontally
+                color='steelblue',
+                font_size=20,
+                alignment='center',  # Center the text horizontally
+                padding_top=10,  # Add padding from the top
+                background_color='rgba(0, 0, 0, 0.8)'  # Make the background color transparent
+            )
+        )
+        # Create a button for the menu icon (three horizontal lines)
+        menu_button = toga.Button('☰', on_press=self.open_menu, style=Pack(width=40, height=40, background_color='steelblue', color='white'))
+
+        # # Add components to the navbar box
+        # navbar_box.add(title_label)
+        # navbar_box.add(menu_button)
+
+        # # Add the navbar above the map and connect button
+        # main_box.add(navbar_box)
+        main_box.add(title_label)
+        main_box.add(menu_button)
+
         # Replace the following coordinates with the actual latitude and longitude
         latitude = 29.643633
         longitude = -82.354927
@@ -79,10 +107,8 @@ class BSafeApp(toga.App):
         m.save(map_filename)
 
         # Load the map from the HTML file in a WebView widget
-        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1))
+        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(10, 10, 10, 10)))
 
-        # Create an image of a motorcycle helmet and center it
-        # helmet_image = toga.ImageView('Helmet.png', style=Pack(width=200, height=200, padding=20))
 
         # Create a button to connect to the helmet
         connect_button = toga.Button('Connect to your Helmet', on_press=self.connect_to_helmet,
@@ -100,9 +126,13 @@ class BSafeApp(toga.App):
         # Show the main window
         self.main_window.show()
 
+    def open_menu(self, widget):
+        # Implement menu functionality here
+        pass
+
     def connect_to_helmet(self, widget):
         # Create a new window for the connected helmet screen
-        connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(400, 300))
+        connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(400, 600))
         connected_helmet_window.app = self
 
         # Create a label for displaying the loading text
