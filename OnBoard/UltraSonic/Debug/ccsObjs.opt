@@ -1,4 +1,5 @@
-"./PreAlphaDemo.obj"
+"./PreAlphaDemoIMU.obj"
+"./threads.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./G8RTOS/src/G8RTOS_CriticalSection.obj"
 "./G8RTOS/src/G8RTOS_IPC.obj"
@@ -50,6 +51,5 @@
 "./driverlib/udma.obj"
 "./driverlib/usb.obj"
 "./driverlib/watchdog.obj"
-"../driverlib/ccs/Debug/driverlib.lib"
-"../driverlib/rvmdk/driverlib.lib"
+"../tm4c123gh6pm.cmd"
 -llibc.a

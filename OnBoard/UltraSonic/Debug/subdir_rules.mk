@@ -8,11 +8,7 @@ SHELL = cmd.exe
 %.obj: ../%.c $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: Arm Compiler'
-<<<<<<< HEAD
-	"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/evanc/OneDrive/Desktop/SchoolWork/EEL4745C/SW-TM4C-2.2.0.295" --include_path="C:/Users/evanc/BSafeHelmet/OnBoard/UltraSonic" --include_path="C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
-=======
 	"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/Users/28jre/OneDrive/Documents/BSafeHelmet/OnBoard/SW-TM4C-2.2.0.295" --include_path="C:/Users/28jre/OneDrive/Documents/BSafeHelmet/OnBoard/UltraSonic" --include_path="C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
->>>>>>> d2b606df9db7e2c0ca91c07334bca90e72edb5f9
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
