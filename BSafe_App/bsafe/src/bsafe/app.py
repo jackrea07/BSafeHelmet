@@ -15,39 +15,29 @@ class BSafeApp(toga.App):
         # Create a box for organizing components vertically and center them
         main_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 40, 40, 40), background_color='rgba(0, 0, 0, 0.8)', alignment='center'))
 
-        # Create a box for the navbar with increased padding at the bottom
-        # navbar_box = toga.Box(style=Pack(direction=ROW, padding=(10, 0, 20, 0), background_color='rgba(0, 0, 0, 0.8)'))
+        # Create a box for the navigation bar components (title and menu button)
+        nav_bar_box = toga.Box(style=Pack(direction=ROW, padding=(10, 10, 10, 10)))
 
-        # Create a label for the title "BSafe Helmet" with updated style
-        title_label = toga.Label(
-            'BSafe Helmet',
-            style=Pack(
-                flex=1,  # Take up available space horizontally
-                color='steelblue',
-                font_size=20,
-                alignment='center',  # Center the text horizontally
-                padding_top=10,  # Add padding from the top
-                background_color='rgba(0, 0, 0, 0.8)'  # Make the background color transparent
-            )
-        )
-        # Create a button for the menu icon (three horizontal lines)
-        menu_button = toga.Button('☰', on_press=self.open_menu, style=Pack(width=40, height=40, background_color='steelblue', color='white'))
+        # Create a label for the title "BSafe Helmet" without background color
+        title_label = toga.Label('BSafe Helmet', style=Pack(flex=1, font_size=20))
 
-        # # Add components to the navbar box
-        # navbar_box.add(title_label)
-        # navbar_box.add(menu_button)
+        # Create a button for the menu icon (three horizontal lines) without background color
+        menu_button = toga.Button('☰', on_press=self.open_menu, style=Pack(width=40, height=40))
 
-        # # Add the navbar above the map and connect button
-        # main_box.add(navbar_box)
-        main_box.add(title_label)
-        main_box.add(menu_button)
+        # Add components to the navigation bar box
+        nav_bar_box.add(title_label)
+        nav_bar_box.add(menu_button)
+
+        # Add the navigation bar above the map and connect button with padding
+        main_box.add(nav_bar_box)
+        main_box.add(toga.Box(style=Pack(height=20)))  # Add padding between navigation bar and map
 
         # Replace the following coordinates with the actual latitude and longitude
         latitude = 29.643633
         longitude = -82.354927
 
-        # Create a Folium map centered at the specified coordinates
-        m = folium.Map(location=[latitude, longitude], zoom_start=15)
+        # Create a Folium map centered at the specified coordinates with padding
+        m = folium.Map(location=[latitude, longitude], zoom_start=15, control_scale=True, zoom_control=False)
 
         # Add a marker at the specified coordinates
         folium.Marker([latitude, longitude], tooltip='Location').add_to(m)
@@ -56,9 +46,8 @@ class BSafeApp(toga.App):
         map_filename = 'map.html'
         m.save(map_filename)
 
-        # Load the map from the HTML file in a WebView widget
-        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(10, 10, 10, 10)))
-
+        # Load the map from the HTML file in a WebView widget with padding
+        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(0, 10)))
 
         # Create a button to connect to the helmet
         connect_button = toga.Button('Connect to your Helmet', on_press=self.connect_to_helmet,
