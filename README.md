@@ -32,7 +32,8 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- Currently the math for how far away the object is has not been developed properly. It repeatedly says "Distance: 0" regardless of how far away the detected object is. We will work on fixing that for the next milestone. 
+- Currently the math for how far away the object is has not been developed properly. It repeatedly says "Distance: 0" regardless of how far away the detected object is. We will work on fixing that for the next milestone.
+- Crash Detection has not been fully tested yet, false negatives/positives exist
 
 ### App
 - GPS does not scrape real-time location. Uses placeholder coordinates for now.
