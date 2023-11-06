@@ -28,11 +28,14 @@ void Gyro_Thread(void){
     while(1){
         G8RTOS_WaitSemaphore(&sem_I2CA);
         int16_t x_gyro_value = BMI160_GyroXGetResult();
+        x_gyro_value = abs(x_gyro_value);
         G8RTOS_SignalSemaphore(&sem_I2CA);
-        G8RTOS_WaitSemaphore(&sem_uart);
-        UARTprintf("X Gyro Value: %d\n", x_gyro_value);
-        G8RTOS_SignalSemaphore(&sem_uart);
-        sleep(2000);
+        if (x_gyro_value > 10000){
+            G8RTOS_WaitSemaphore(&sem_uart);
+            UARTprintf("Crash Detected! Gyro Value: %d\n", x_gyro_value);
+            G8RTOS_SignalSemaphore(&sem_uart);
+        }
+        sleep(10);
     }
 }
 
