@@ -43,4 +43,5 @@ Mobile App (pairs to helmet via bluetooth)
 - There is not yet a way to reliably move between the bluetooth connection and home pages without crashing the program.
 
 ### Bluetooth communication
-- The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth.
+- The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth to remedy this an ESP32 will be used to do all the audio/bluetooth processing.
+- HC05 does not have any working code in this github as of 11/5, and the code included in main3.c has an unknown bug (clock speed?). 
