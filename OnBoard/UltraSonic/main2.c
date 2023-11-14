@@ -32,6 +32,7 @@
 
 /* -----------------------      Global Variables        --------------------- */
 volatile bool boolTrigCondition = 1;        // Variable to control the Trigger Pin Switching
+volatile bool checkEcho = 0;
 volatile uint32_t ui32EchoDuration = 0;     // Variable to store duration for which Echo Pin is high
 volatile uint32_t ui32ObstacleDist = 0;     // Variable to store distance of the Obstacle
 
@@ -40,6 +41,7 @@ uint8_t ui8WelcomeText[] = {"\n\rDistance: "};
 /* -----------------------      Function Prototypes     --------------------- */
 void Timer0IntHandler(void);                // The prototype of the ISR for Timer0 Interrupt
 void PortAIntHandler(void);                 // Prototype for ISR of GPIO PortA
+void TrigDelay(void);
 
 /* -----------------------          Main Program        --------------------- */
 
@@ -56,34 +58,14 @@ void Timer0AIntHandler(void){
 void PortAIntHandler(void){
     // The ISR for GPIO PortA Interrupt Handling
     // Clear the GPIO Hardware Interrupt
+    checkEcho = 1;
     GPIOIntClear(GPIO_PORTA_BASE , GPIO_INT_PIN_2);
 
-    // Condition when Echo Pin (PA2) goes high
-    if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 1){
-        // Initialize Timer2 with value 0
-        HWREG(TIMER2_BASE + TIMER_O_TAV) = 0;
-        // Enable Timer2 to start measuring duration for which Echo Pin is High
-        TimerEnable(TIMER2_BASE, TIMER_A);
-    }
-    else{
-        ui32EchoDuration = TimerValueGet(TIMER2_BASE, TIMER_A);
-        // Disable Timer2 to stop measuring duration for which Echo Pin is High
-        TimerDisable(TIMER2_BASE, TIMER_A);
-        // Convert the Timer Duration to Distance Value according to Ultrasonic's formula
-        ui32ObstacleDist = ui32EchoDuration / 4640;
-        // Convert the Distance Value from Integer to Array of Characters
-        char chArrayDistance[8];
-        ltoa(ui32ObstacleDist, chArrayDistance, 10);
-
-        // Transmit the distance reading to the terminal
-        uint8_t iter;
-        for (iter = 0; iter<sizeof(chArrayDistance); iter++ ) UARTCharPut(UART0_BASE, chArrayDistance[iter]);
-        for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
-
-        // Enable condition for Trigger Pulse
-        boolTrigCondition = 1;
-    }
-
+    // Initialize Timer2 with value 0
+    HWREG(TIMER2_BASE + TIMER_O_TAV) = 0;
+    // Enable Timer2 to start measuring duration for which Echo Pin is High
+    TimerEnable(TIMER2_BASE, TIMER_A);
+    GPIOIntDisable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
 }
 int main(void){
     // Set the System clock to 80MHz and Enable the clock for peripherals PortA, Timer0, Timer2 and UART0
@@ -113,7 +95,7 @@ int main(void){
     // Configure and enable the Interrupt on both edges for PA2. Echo Pin
     IntEnable(INT_GPIOA);
     IntRegister(INT_GPIOA, PortAIntHandler);
-    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_BOTH_EDGES);
+    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_RISING_EDGE);
     GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
 
     // Configure Timer0 to run in one-shot down-count mode
@@ -137,7 +119,7 @@ int main(void){
     while (1){
         if (boolTrigCondition){
             // Load the Timer with value for generating a  delay of 10 uS.
-            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -1);
+            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -10);
             // Make the Trigger Pin (PA3) High
             GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
             // Enable the Timer0 to cause an interrupt when timeout occurs
@@ -145,6 +127,28 @@ int main(void){
             // Disable the condition for Trigger Pin Switching
             boolTrigCondition = 0;
             //for (iter = 0; iter<sizeof(itworked); iter++ ) UARTCharPut(UART0_BASE, itworked[iter]);
+        }
+        while(checkEcho){
+            if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 0){
+                ui32EchoDuration = TimerValueGet(TIMER2_BASE, TIMER_A);
+                // Disable Timer2 to stop measuring duration for which Echo Pin is High
+                TimerDisable(TIMER2_BASE, TIMER_A);
+                // Convert the Timer Duration to Distance Value according to Ultrasonic's formula
+                ui32ObstacleDist = ui32EchoDuration / 4640;
+                // Convert the Distance Value from Integer to Array of Characters
+                char chArrayDistance[8];
+                ltoa(ui32ObstacleDist, chArrayDistance, 10);
+
+                // Transmit the distance reading to the terminal
+                uint8_t iter;
+                for (iter = 0; iter<sizeof(chArrayDistance); iter++ ) UARTCharPut(UART0_BASE, chArrayDistance[iter]);
+                for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
+
+                // Enable condition for Trigger Pulse
+                boolTrigCondition = 1;
+                checkEcho = 0;
+                GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
+            }
         }
     }
 }

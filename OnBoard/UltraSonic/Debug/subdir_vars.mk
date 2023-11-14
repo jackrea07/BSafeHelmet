@@ -9,38 +9,32 @@ CMD_SRCS += \
 ../tm4c123gh6pm.cmd 
 
 C_SRCS += \
-../PreAlphaDemoIMU.c \
-../sensor.c \
+../main2.c \
 ../threads.c \
 ../tm4c123gh6pm_startup_ccs.c 
 
 C_DEPS += \
-./PreAlphaDemoIMU.d \
-./sensor.d \
+./main2.d \
 ./threads.d \
 ./tm4c123gh6pm_startup_ccs.d 
 
 OBJS += \
-./PreAlphaDemoIMU.obj \
-./sensor.obj \
+./main2.obj \
 ./threads.obj \
 ./tm4c123gh6pm_startup_ccs.obj 
 
 OBJS__QUOTED += \
-"PreAlphaDemoIMU.obj" \
-"sensor.obj" \
+"main2.obj" \
 "threads.obj" \
 "tm4c123gh6pm_startup_ccs.obj" 
 
 C_DEPS__QUOTED += \
-"PreAlphaDemoIMU.d" \
-"sensor.d" \
+"main2.d" \
 "threads.d" \
 "tm4c123gh6pm_startup_ccs.d" 
 
 C_SRCS__QUOTED += \
-"../PreAlphaDemoIMU.c" \
-"../sensor.c" \
+"../main2.c" \
 "../threads.c" \
 "../tm4c123gh6pm_startup_ccs.c" 
 
