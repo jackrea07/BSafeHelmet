@@ -9,7 +9,7 @@ For the Pre-Alpha build, the persistent state of polling the ultra-sonic sensor 
 After researching different methods of app building, we decided to build our app using the Beeware framework, and first completed some tutorial work to familiarize ourselves with how it operates. We then created a simple UI design for our app homepage to visualize what the app design will look like. We were able to display a real map at a specified GPS location, in addition to a mock up of a nav bar and a button to connect to a helmet via bluetooth. We are also in the process of implementing bluetooth into the app, though it does not yet successfully detect any devices emitting a bluetooth signal.
 
 ### Bluetooth Communication
-The HC05 bluetooth module can send/recieve information over a serial port on a PC.
+The HC05 bluetooth module can send/recieve information over a serial port on a PC. This will be insufficient for our project so we ordered a more sophisticated bluetooth communication module.
 
 
 ## Project Architecture
@@ -43,4 +43,5 @@ Mobile App (pairs to helmet via bluetooth)
 - There is not yet a way to reliably move between the bluetooth connection and home pages without crashing the program.
 
 ### Bluetooth communication
-- The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth.
+- The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth to remedy this an ESP32 will be used to do all the audio/bluetooth processing.
+- HC05 does not have any working code in this github as of 11/5, and the code included in main3.c has an unknown bug (clock speed?). It does however work in Keil uVision with their packages and header files. 
