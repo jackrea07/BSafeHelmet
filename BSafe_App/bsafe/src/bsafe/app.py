@@ -1,3 +1,5 @@
+import base64
+
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, ROW
@@ -42,12 +44,22 @@ class BSafeApp(toga.App):
         # Add a marker at the specified coordinates
         folium.Marker([latitude, longitude], tooltip='Location').add_to(m)
 
-        # Save the map as an HTML file
-        map_filename = 'map.html'
-        m.save(map_filename)
 
-        # Load the map from the HTML file in a WebView widget with padding
-        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(0, 10)))
+        ######## OLD CODE UNSTABLE ###### vvvvvvvv
+        # # Save the map as an HTML file
+        # map_filename = 'map.html'
+        # m.save(map_filename)
+
+        # # Load the map from the HTML file in a WebView widget with padding
+        # map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(0, 10)))
+
+        # Save the map as a base64-encoded string
+        map_base64 = folium.Map(location=[latitude, longitude], zoom_start=15, control_scale=True, zoom_control=False)._repr_html_()
+
+        # Load the map from the base64-encoded string in a WebView widget with padding
+        map_widget = toga.WebView(url=f'data:text/html;base64,{base64.b64encode(map_base64.encode()).decode()}', style=Pack(flex=1, padding=(0, 0)))
+
+
 
         # Create a button to connect to the helmet
         connect_button = toga.Button('Connect to your Helmet', on_press=self.connect_to_helmet,

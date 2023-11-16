@@ -8,6 +8,7 @@ beeware-venv\Scripts\activate
 python -m pip install briefcase
 pip install folium
 pip install tornado
+pip install kivy
 
 cd BSafe_App
 cd bsafe
@@ -16,12 +17,12 @@ briefcase dev
 1) INITIALIZE ENVIRONMENT
 md Bsafe
 cd BSafe_App
-py -m venv beeware-venv
+python -m venv beeware-venv
 beeware-venv\Scripts\activate
 
 1.2) RETURN TO ENVIRONMENT
 cd BSafe_App
-py -m venv beeware-venv
+python -m venv beeware-venv
 beeware-venv\Scripts\activate
 ****SKIP to step 4*****
 
