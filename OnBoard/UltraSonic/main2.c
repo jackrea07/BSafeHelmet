@@ -16,7 +16,7 @@
 #include "driverlib/pin_map.h"              // Mapping of peripherals to pins for all parts
 #include "driverlib/uart.h"                 // Defines and Macros for the UART
 #include "driverlib/rom.h"                  // Defines and macros for ROM API of driverLib
-
+#include "MultimodDrivers/multimod_uart.h"
 #define UART0_BAUDRATE  115200              // Macro for UART0 Baud rate
 
 /* -----------------------      Global Variables        --------------------- */
@@ -25,8 +25,6 @@ volatile bool checkEcho = 0;
 volatile uint32_t ui32EchoDuration = 0;     // Variable to store duration for which Echo Pin is high
 volatile uint32_t ui32ObstacleDist = 0;     // Variable to store distance of the Obstacle
 
-uint8_t ui8WelcomeText[] = {"\n\rDistance: "};
-//uint8_t itworked[] = {"\nit worked"};
 /* -----------------------      Function Prototypes     --------------------- */
 void Timer0IntHandler(void);                // The prototype of the ISR for Timer0 Interrupt
 void PortAIntHandler(void);                 // Prototype for ISR of GPIO PortA
@@ -67,14 +65,7 @@ int main(void){
     // Master interrupt enable API for all interrupts
     IntMasterDisable();
 
-    // Configure PA0 as UART0_Rx and PA1 as UART0_Tx
-    GPIOPinConfigure(GPIO_PA0_U0RX);
-    GPIOPinConfigure(GPIO_PA1_U0TX);
-    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-    // Configure the baud rate and data setup for the UART0
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), UART0_BAUDRATE, UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE );
-    // Enable the UART0
-    UARTEnable(UART0_BASE);
+    UART_Init();
 
     // Set the PA3 port as Output. Trigger Pin
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
@@ -98,12 +89,8 @@ int main(void){
     // Configure Timer2 to run in one-shot up-count mode
     TimerConfigure(TIMER2_BASE, TIMER_CFG_ONE_SHOT_UP);
 
-    // Transmit a New Page Character to the Terminal
-    UARTCharPutNonBlocking(UART0_BASE, '\f');
-
     uint8_t iter;
     IntMasterEnable();
-    for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
 
     while (1){
         if (boolTrigCondition){
@@ -124,15 +111,8 @@ int main(void){
                 TimerDisable(TIMER2_BASE, TIMER_A);
                 // Convert the Timer Duration to Distance Value according to Ultrasonic's formula
                 ui32ObstacleDist = ui32EchoDuration / 4640;
-                // Convert the Distance Value from Integer to Array of Characters
-                char chArrayDistance[8];
-                ltoa(ui32ObstacleDist, chArrayDistance, 10);
-
-                // Transmit the distance reading to the terminal
-                uint8_t iter;
-                for (iter = 0; iter<sizeof(chArrayDistance); iter++ ) UARTCharPut(UART0_BASE, chArrayDistance[iter]);
-                for (iter = 0; iter<sizeof(ui8WelcomeText); iter++ ) UARTCharPut(UART0_BASE, ui8WelcomeText[iter]);
-
+                // Print
+                UARTprintf("distance: %d\n", ui32ObstacleDist);
                 // Enable condition for Trigger Pulse
                 boolTrigCondition = 1;
                 checkEcho = 0;
