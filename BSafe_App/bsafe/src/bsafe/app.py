@@ -12,27 +12,8 @@ import threading
 
 class BSafeApp(toga.App):
     def startup(self):
-        self.threads = []  # Initialize the threads list
-
         # Create a box for organizing components vertically and center them
-        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 40, 40, 40), background_color='rgba(0, 0, 0, 0.8)', alignment='center'))
-
-        # Create a box for the navigation bar components (title and menu button)
-        nav_bar_box = toga.Box(style=Pack(direction=ROW, padding=(10, 10, 10, 10)))
-
-        # Create a label for the title "BSafe Helmet" without background color
-        title_label = toga.Label('BSafe Helmet', style=Pack(flex=1, font_size=20))
-
-        # Create a button for the menu icon (three horizontal lines) without background color
-        menu_button = toga.Button('☰', on_press=self.open_menu, style=Pack(width=40, height=40))
-
-        # Add components to the navigation bar box
-        nav_bar_box.add(title_label)
-        nav_bar_box.add(menu_button)
-
-        # Add the navigation bar above the map and connect button with padding
-        main_box.add(nav_bar_box)
-        main_box.add(toga.Box(style=Pack(height=20)))  # Add padding between navigation bar and map
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 0, 0, 0)))
 
         # Replace the following coordinates with the actual latitude and longitude
         latitude = 29.643633
@@ -44,31 +25,40 @@ class BSafeApp(toga.App):
         # Add a marker at the specified coordinates
         folium.Marker([latitude, longitude], tooltip='Location').add_to(m)
 
-
-        ######## OLD CODE UNSTABLE ###### vvvvvvvv
-        # # Save the map as an HTML file
-        # map_filename = 'map.html'
-        # m.save(map_filename)
-
-        # # Load the map from the HTML file in a WebView widget with padding
-        # map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(0, 10)))
-
         # Save the map as a base64-encoded string
-        map_base64 = folium.Map(location=[latitude, longitude], zoom_start=15, control_scale=True, zoom_control=False)._repr_html_()
+        map_base64 = m._repr_html_()
 
         # Load the map from the base64-encoded string in a WebView widget with padding
         map_widget = toga.WebView(url=f'data:text/html;base64,{base64.b64encode(map_base64.encode()).decode()}', style=Pack(flex=1, padding=(0, 0)))
 
+        # Create buttons for the navigation bar
+        button1 = toga.Button('B1', on_press=self.button1_action, style=Pack(flex=1, 
+                                                                             padding=(10, 10), 
+                                                                             height=100, 
+                                                                             background_color='steelblue', 
+                                                                             #border_width=1
+                                                                             ))
+        button2 = toga.Button('B2', on_press=self.button2_action, style=Pack(flex=1, 
+                                                                             padding=(10, 10), 
+                                                                             height=100, 
+                                                                             background_color='steelblue', 
+                                                                             #border_width=1
+                                                                             ))
+        
+        # Set images for the buttons
+        # button1.image = 'path/to/button1_icon.png'
+        # button2.image = 'path/to/button2_icon.png'
 
+        # Create a box for the navigation bar
+        navbar_box = toga.Box(style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='center', background_color = 'black'))
 
-        # Create a button to connect to the helmet
-        connect_button = toga.Button('Connect to your Helmet', on_press=self.connect_to_helmet,
-                                     style=Pack(padding=20, background_color='steelblue', color='white'))
+        # Add buttons to the navigation bar
+        navbar_box.add(button1)
+        navbar_box.add(button2)
 
         # Add components to the main box
         main_box.add(map_widget)
-        # main_box.add(helmet_image)
-        main_box.add(connect_button)
+        main_box.add(navbar_box)
 
         # Create a main window and set its content to the main box
         self.main_window = toga.MainWindow(title='BSafe Helmet App', size=(400, 600))
@@ -77,14 +67,21 @@ class BSafeApp(toga.App):
         # Show the main window
         self.main_window.show()
 
-    def open_menu(self, widget):
-        # Implement menu functionality here
+    def button1_action(self, widget):
+        # Implement button 1 functionality here
+        pass
+
+    def button2_action(self, widget):
+        # Implement button 2 functionality here
         pass
 
     def connect_to_helmet(self, widget):
         # Create a new window for the connected helmet screen
         connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(400, 600))
         connected_helmet_window.app = self
+
+        # Set the background color of the window
+        connected_helmet_window.background_color = 'lightblue'
 
         # Create a label for displaying the loading text
         loading_label = toga.Label('Searching for bluetooth signals', style=Pack(padding=20))
@@ -114,10 +111,8 @@ class BSafeApp(toga.App):
         # Show the connected helmet window
         connected_helmet_window.show()
 
-
 def main():
     return BSafeApp()
 
 if __name__ == '__main__':
     BSafeApp().main_loop()
-
