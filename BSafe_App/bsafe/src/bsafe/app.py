@@ -1,5 +1,3 @@
-import base64
-
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, ROW
@@ -25,11 +23,12 @@ class BSafeApp(toga.App):
         # Add a marker at the specified coordinates
         folium.Marker([latitude, longitude], tooltip='Location').add_to(m)
 
-        # Save the map as a base64-encoded string
-        map_base64 = m._repr_html_()
+        # Save the map as an HTML file
+        map_filename = 'map.html'
+        m.save(map_filename)
 
-        # Load the map from the base64-encoded string in a WebView widget with padding
-        map_widget = toga.WebView(url=f'data:text/html;base64,{base64.b64encode(map_base64.encode()).decode()}', style=Pack(flex=1, padding=(0, 0)))
+        # Load the map from the HTML file in a WebView widget with padding
+        map_widget = toga.WebView(url='file://' + os.path.abspath(map_filename), style=Pack(flex=1, padding=(0, 0)))
 
         # Create buttons for the navigation bar
         button1 = toga.Button('B1', on_press=self.button1_action, style=Pack(flex=1, 
@@ -50,7 +49,7 @@ class BSafeApp(toga.App):
         # button2.image = 'path/to/button2_icon.png'
 
         # Create a box for the navigation bar
-        navbar_box = toga.Box(style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='center', background_color = 'black'))
+        navbar_box = toga.Box(style=Pack(direction=ROW, padding=(0, 0, 20, 0), flex=1, height=100, alignment='center', background_color = 'black'))
 
         # Add buttons to the navigation bar
         navbar_box.add(button1)
@@ -74,42 +73,6 @@ class BSafeApp(toga.App):
     def button2_action(self, widget):
         # Implement button 2 functionality here
         pass
-
-    def connect_to_helmet(self, widget):
-        # Create a new window for the connected helmet screen
-        connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(400, 600))
-        connected_helmet_window.app = self
-
-        # Set the background color of the window
-        connected_helmet_window.background_color = 'lightblue'
-
-        # Create a label for displaying the loading text
-        loading_label = toga.Label('Searching for bluetooth signals', style=Pack(padding=20))
-
-        # Add the loading label to the connected helmet window
-        connected_helmet_window.content = loading_label
-
-        # Start a thread to update the loading text with cycling ellipses
-        def update_loading_text():
-            ellipses = 1
-            running = True
-            while running:
-                time.sleep(0.5)
-                ellipses = (ellipses + 1) % 4
-                loading_text = 'Searching for bluetooth signals' + '.' * ellipses
-
-                # Update the loading label
-                loading_label.text = loading_text
-
-        # Start the thread as daemon
-        thread = threading.Thread(target=update_loading_text, daemon=True)
-        thread.start()
-
-        # Add the thread to the app's threads list
-        self.threads.append(thread)
-
-        # Show the connected helmet window
-        connected_helmet_window.show()
 
 def main():
     return BSafeApp()
