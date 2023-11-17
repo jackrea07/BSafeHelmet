@@ -8,7 +8,6 @@ beeware-venv\Scripts\activate
 python -m pip install briefcase
 pip install folium
 pip install tornado
-pip install kivy
 
 cd BSafe_App
 cd bsafe
