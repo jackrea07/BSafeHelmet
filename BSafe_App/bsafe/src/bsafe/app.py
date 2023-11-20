@@ -12,6 +12,10 @@ import threading
 
 class BSafeApp(toga.App):
     def startup(self):
+
+        # List to store threads
+        self.threads = []
+
         # Create a box for organizing components vertically and center them
         main_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 0, 0, 0)))
 
@@ -29,55 +33,44 @@ class BSafeApp(toga.App):
         map_base64 = m._repr_html_()
 
         # Load the map from the base64-encoded string in a WebView widget with padding
-        map_widget = toga.WebView(url=f'data:text/html;base64,{base64.b64encode(map_base64.encode()).decode()}', style=Pack(flex=1, padding=(0, 0)))
+        map_widget = toga.WebView(url=f'data:text/html;base64,{base64.b64encode(map_base64.encode()).decode()}', style=Pack(flex=2, padding=(0, 0)))
 
-        # Create buttons for the navigation bar
-        button1 = toga.Button('B1', on_press=self.button1_action, style=Pack(flex=1, 
-                                                                             padding=(10, 10), 
-                                                                             height=100, 
-                                                                             background_color='steelblue', 
-                                                                             #border_width=1
-                                                                             ))
-        button2 = toga.Button('B2', on_press=self.button2_action, style=Pack(flex=1, 
-                                                                             padding=(10, 10), 
-                                                                             height=100, 
-                                                                             background_color='steelblue', 
-                                                                             #border_width=1
-                                                                             ))
-        
-        # Set images for the buttons
-        # button1.image = 'path/to/button1_icon.png'
-        # button2.image = 'path/to/button2_icon.png'
+        # Create buttons for the navigation bar with icons
+        bluetooth_icon_path = 'bsafe/src/bsafe/icons/bluetooth_icon'  # Replace with the actual path
+        map_icon_path = 'src/bsafe/icons/map_icon.png'  # Replace with the actual path
+        user_icon_path = 'src/bsafe/icons/user_icon.png'  # Replace with the actual path
+
+        button1 = toga.Button('B1', on_press=self.connect_to_helmet, style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue'))
+        button1.icon = toga.Icon(bluetooth_icon_path, 'Bluetooth')
+
+        button2 = toga.Button('B2', on_press=self.show_map, style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue'))
+        #button2.icon = toga.Icon(map_icon_path, 'Map')
+
+        button3 = toga.Button('B3', on_press=self.show_user_profile, style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue'))
+        #button3.icon = toga.Icon(user_icon_path, 'User Profile')
 
         # Create a box for the navigation bar
-        navbar_box = toga.Box(style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='center', background_color = 'black'))
+        navbar_box = toga.Box(style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='center', background_color='black'))
 
         # Add buttons to the navigation bar
         navbar_box.add(button1)
         navbar_box.add(button2)
+        navbar_box.add(button3)
 
         # Add components to the main box
         main_box.add(map_widget)
         main_box.add(navbar_box)
 
         # Create a main window and set its content to the main box
-        self.main_window = toga.MainWindow(title='BSafe Helmet App', size=(400, 600))
+        self.main_window = toga.MainWindow(title='BSafe Helmet App', size=(1000, 1800))
         self.main_window.content = main_box
 
         # Show the main window
         self.main_window.show()
 
-    def button1_action(self, widget):
-        # Implement button 1 functionality here
-        pass
-
-    def button2_action(self, widget):
-        # Implement button 2 functionality here
-        pass
-
     def connect_to_helmet(self, widget):
         # Create a new window for the connected helmet screen
-        connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(400, 600))
+        connected_helmet_window = toga.Window(title='Connected Helmet Screen', size=(1000, 1800))
         connected_helmet_window.app = self
 
         # Set the background color of the window
@@ -110,6 +103,15 @@ class BSafeApp(toga.App):
 
         # Show the connected helmet window
         connected_helmet_window.show()
+        pass
+
+    def show_map(self, widget):
+        # Implement button 2 functionality here
+        pass
+
+    def show_user_profile(self, widget):
+        # Implement button 3 functionality here
+        pass
 
 def main():
     return BSafeApp()
