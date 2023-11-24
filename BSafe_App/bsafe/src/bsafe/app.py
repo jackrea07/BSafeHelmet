@@ -64,7 +64,7 @@ class BSafeApp(toga.App):
         navbar_box.add(button3)
 
         # Create a box for the map
-        map_container = toga.Box(style=Pack(flex=4, height=500, width=900))
+        map_container = toga.Box(style=Pack(flex=4, height=485, width=900))
 
         # Add components to the map container
         map_container.add(map_widget)
