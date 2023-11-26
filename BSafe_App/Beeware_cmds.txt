@@ -52,10 +52,6 @@ open src/bsafe/app.py and make changes as necessary
 briefcase create
 briefcase build
 
-6.1) FOLIUM INSTALL
-pip install folium
-pip install tornado
-
 7) RUN THE APP & BUILD INSTALLER
 briefcase run
 briefcase package

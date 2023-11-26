@@ -36,19 +36,19 @@ class BSafeApp(toga.App):
         user_icon_path = 'icons/user_icon.png'  # Replace with the actual path
 
         button1 = toga.Button(
-            'B1', on_press=self.connect_to_helmet,
+            'Bluetooth', on_press=self.connect_to_helmet,
             style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
         )
         button1.icon = toga.Icon(bluetooth_icon_path, 'Bluetooth')
 
         button2 = toga.Button(
-            'B2', on_press=self.show_map,
+            'Map', on_press=self.show_map,
             style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
         )
         # button2.icon = toga.Icon(map_icon_path, 'Map')
 
         button3 = toga.Button(
-            'B3', on_press=self.show_user_profile,
+            'Profile', on_press=self.show_user_profile,
             style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
         )
         # button3.icon = toga.Icon(user_icon_path, 'User Profile')
@@ -64,7 +64,7 @@ class BSafeApp(toga.App):
         navbar_box.add(button3)
 
         # Create a box for the map
-        map_container = toga.Box(style=Pack(flex=4, height=485, width=900))
+        map_container = toga.Box(style=Pack(flex=4, height=480, width=900))
 
         # Add components to the map container
         map_container.add(map_widget)
@@ -77,10 +77,13 @@ class BSafeApp(toga.App):
 
         # Create a main window and set its content to the two containers
         self.main_window = toga.MainWindow(title='BSafe Helmet App', size=(1000, 1800))
-        self.main_window.content = toga.Box(
+        self.main_box = toga.Box(
             style=Pack(direction=COLUMN, padding=(0, 0)),
             children=[map_container, navbar_container]
         )
+
+        self.main_window.content = self.main_box
+        
 
         # Show the main window
         self.main_window.show()
@@ -88,11 +91,6 @@ class BSafeApp(toga.App):
     def connect_to_helmet(self, widget):
         # Create a label for displaying the loading text
         loading_label = toga.Label('Searching for bluetooth signals', style=Pack(padding=20))
-
-        # Add the loading label to the main box (replace the existing content)
-        self.main_box.remove(self.map_widget)  # Remove the map widget
-        #self.main_box.remove(self.navbar_box)  # Remove the navigation bar
-        self.main_box.add(loading_label)  # Add the loading label
 
         # Start a thread to update the loading text with cycling ellipses
         def update_loading_text():
@@ -116,23 +114,103 @@ class BSafeApp(toga.App):
         # Simulate a delay to represent the time it takes to connect to the helmet
         time.sleep(5)
 
-        # Once connected, update the main window with the new information
-        self.main_box.remove(loading_label)  # Remove the loading label
-        self.main_box.add(self.map_widget)  # Add back the map widget
-        self.main_box.add(self.navbar_box)  # Add back the navigation bar
+        # Create a box for the navbar
+        navbar_box = toga.Box(
+            style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='bottom', background_color='black')
+        )
+
+
+        # Add buttons to the navigation bar
+        button1 = toga.Button(
+            'Bluetooth', on_press=self.connect_to_helmet,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        button1.icon = toga.Icon('icons/bluetooth_icon.png', 'Bluetooth')
+
+        button2 = toga.Button(
+            'Map', on_press=self.show_map,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        # button2.icon = toga.Icon('icons/map_icon.png', 'Map')
+
+        button3 = toga.Button(
+            'Profile', on_press=self.show_user_profile,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        # button3.icon = toga.Icon('icons/user_icon.png', 'User Profile')
+
+        navbar_box.add(button1)
+        navbar_box.add(button2)
+        navbar_box.add(button3)
+
+        bluetooth_box = toga.Box(style=Pack(direction=COLUMN, padding=20))
+        bluetooth_box.add(loading_label)
+        bluetooth_box.add(navbar_box)
 
         # You can update the map or perform any other actions as needed
+        self.main_window.content = bluetooth_box
 
         # Refresh the main window
         self.main_window.refresh()
 
     def show_map(self, widget):
-        # Implement button 2 functionality here
+        self.main_window.content = self.main_box
+        
+        # Show the main window
+        self.main_window.show()
+
         pass
 
     def show_user_profile(self, widget):
-        # Implement button 3 functionality here
-        pass
+        # Create a box for user profile content
+        profile_box = toga.Box(style=Pack(direction=COLUMN, padding=20))
+
+        # Add components to the user profile box (for illustration, you can customize this part)
+        profile_label = toga.Label("User Profile", style=Pack(font_size=24, padding=(0, 0, 0, 10)))
+
+        # Create a text input box for the phone number
+        phone_input = toga.TextInput(placeholder="Enter your phone number", style=Pack(padding=(0, 0, 0, 10)))
+
+        # Add the components to the profile box
+        profile_box.add(profile_label)
+        profile_box.add(phone_input)
+
+        # Create a box for the navbar
+        navbar_box = toga.Box(
+            style=Pack(direction=ROW, padding=(0, 0, 0, 0), flex=1, height=100, alignment='bottom', background_color='black')
+        )
+
+
+        # Add buttons to the navigation bar
+        button1 = toga.Button(
+            'Bluetooth', on_press=self.connect_to_helmet,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        button1.icon = toga.Icon('icons/bluetooth_icon.png', 'Bluetooth')
+
+        button2 = toga.Button(
+            'Map', on_press=self.show_map,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        # button2.icon = toga.Icon('icons/map_icon.png', 'Map')
+
+        button3 = toga.Button(
+            'Profile', on_press=self.show_user_profile,
+            style=Pack(flex=1, padding=(15, 15), height=70, background_color='steelblue')
+        )
+        # button3.icon = toga.Icon('icons/user_icon.png', 'User Profile')
+
+        navbar_box.add(button1)
+        navbar_box.add(button2)
+        navbar_box.add(button3)
+
+        profile_box.add(navbar_box)
+
+        # Set the main window content to the user profile box
+        self.main_window.content = profile_box
+        self.main_window.show()
+
+
 
 def main():
     return BSafeApp()
