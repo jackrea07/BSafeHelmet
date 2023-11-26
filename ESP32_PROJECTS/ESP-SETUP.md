@@ -5,32 +5,29 @@ Up to date VScode is a prerequisite
 This require a sizeable chunk of disk space, but you can delete the installed SDK later if needed
 **this is what worked for me.
 ## ESP IDF basic SETUP
-### 1
-In VScode, install the extension "Espressif IDF".
-### 2
-Open the extension on the left side (you may need to dig for it),
+1: In VScode, install the extension "Espressif IDF".
+<div align="center"> <img src="images/step 1.JPG" width = "1000" /> </div> 
+2: Open the extension on the left side (you may need to dig for it),
 the first opening will run the IDF Setup (this might take a bit).
-### 3
-Click Express
-### 4
-Change the ESP-IDF version to the latest release (v5.1.2).
+
+3: Click Express
+
+4: Change the ESP-IDF version to the latest release (v5.1.2).
 I used the default directories but if you don't, make sure to write them down 
 for reference in the environment variable setup.
-### 5
-Click install (this will take a awhile to setup the sdk, maybe 10+ minutes).
+
+5: Click install (this will take a awhile to setup the sdk, maybe 10+ minutes).
 
 ## Enviornment variable setup 
 Use these instead of using relative paths in each project.
-### 6
-Search up "advanced system settings" in  your start menu and open "view advanced system settings"
+6: Search up "advanced system settings" in  your start menu and open "view advanced system settings"
 Advanced tab->Environment Variables...
-### 7
-Add a variable by clicking "New" in the system variables tab
+
+7: Add a variable by clicking "New" in the system variables tab
 Variable Name: IDF_PATH
 Variable value: C:\Users\<.User>\esp\esp-idf
 (replace <.User> with your local username directory)
-### 8
-Add another variable in the same way:
+8: Add another variable in the same way:
 Variable Name: IDF_TOOLS_PATH
 Variable value: C:\Users\<.User>\.espressif
 ## Basic install finished
