@@ -55,3 +55,68 @@ Mobile App (pairs to helmet via bluetooth)
 - Lastly, in CCS, click on "Import project", and choose the cloned "BSafeHelmet/OnBoard/UltraSonic" directory.
 - You will now be able to build the project in the CCS IDE.
 - Note: if you receive include errors upon first build, right click the project name ("UltraSonic") in the Project Explorer tab and click on "Properties". Then navigate to Build -> Arm Properties -> Include Options. Delete the current path to the SW-TM4C-2.2.0.295 SDK and replace with your exact path to the SDK. The build should now work with no errors.
+
+### BSafe Mobile App Build Instructions
+0) IF ALREADY COMPILED PREVIOUSLY & PULLING FROM GITHUB, RUN THE FOLLOWING COMMANDS
+
+First DELETE the beeware-venv that exists in BSAFEHELMET directory
+Then, navigate to BSafeHelmet directory if necessary (Should be default)
+
+python -m venv beeware-venv
+beeware-venv\Scripts\activate
+
+(SHOULD ENTER beeware-venv VIRTUAL ENVIRONMENT)
+
+python -m pip install briefcase
+pip install folium
+pip install tornado
+pip install toga
+
+cd BSafe_App
+cd bsafe
+briefcase run -u
+
+
+1) INITIALIZE ENVIRONMENT
+python -m venv beeware-venv
+beeware-venv\Scripts\activate
+cd BSafe_App
+
+
+2) INSTALL BEEWARE TOOLS
+python -m pip install briefcase
+
+
+3) BOOTSTRAP NEW PROJECT (IGNORE THIS ONE)
+briefcase new
+Fill out Name, URL, email, etc...
+
+
+4) RUN DEFAULT APP IN DEVELOPER MODE
+cd 'bsafe'
+briefcase dev **NOTE: map will not display properly in dev mode**
+
+
+5) MODIFY CONTENT
+open src/bsafe/app.py and make changes as necessary
+
+
+6) CREATE APPLICATION SCAFFOLD & BUILD APPLICATION
+briefcase create
+briefcase build
+
+
+7) RUN THE APP & BUILD INSTALLER
+briefcase run
+briefcase package
+
+
+8) MODIFY APPLICATION CODE AS DESIRED
+Make any changes to the app as desired (such as in app.py)
+After doing so, 'briefcase dev' will reflect changes but 'briefcase run' will not.
+To update, use 'briefcase update'
+To update AND run in a single step, use 'briefcase run -u'
+
+
+9) TO RUN ON VIRTUAL 'ANDROID'
+briefcase run android -u -r -d "@beePhone"
