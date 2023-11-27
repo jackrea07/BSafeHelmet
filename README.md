@@ -3,7 +3,7 @@
 ## Completed Work
 
 ### Blind-Spot/Crash Detection
-For the Pre-Alpha build, the persistent state of polling the ultra-sonic sensor for objects has been developed. The program is able to detect when an object is in range of the sensor. Additionally, we have interfaced with an IMU to grab accelerometer and gyroscope data. This exact accelerometer will need to be tested in the near future to determine if it has high enough quality for the finished product. Lastly, we have a RTOS to run the future program on. All we need to do is add proper threads.
+For the prototype, the persistent state of polling the ultra-sonic sensor for objects has been developed and integrated as a thread within the RTOS. The program is able to detect when an object is in range of the sensor, and display this info via a LED. Additionally, we have interfaced with an IMU to grab accelerometer and gyroscope data. The IMU data can be manipulated in such a way to determine when a crash has occurred and relay to the bluetooth interface. This functionality has been deployed within a thread in the RTOS.
 
 ### App
 For the project prototype milestone, we focused on two things: updating the UI and implementing functional bluetooth connectivity. For the UI, we first sought to have the map display encompass the entire screen, except with a navigation bar at the bottom of the screen (positioned over the map). The navbar contains three buttons, each of which display to the user a different window depending on which was clicked. The bluetooth button and corresponding screen attempts to locate a bluetooth signal, though we have not yet succeeded in detecting an actual signal. The map page (which is displayed by default) allows users to scroll and zoom freely, and displays a POI marker at the location provided. The profile page has a text input box for users to input their phone number so that it may be used to call emergency services in the event of a crash. The bluetooth module has proven difficult to implement, and we have encountered many roadblocks in doing so. We initially attempted to utilize the PyBluez module, but experienced a number of crashes and bugs before pursuing a different strategy. The current bluetooth library we are implementing, Bleak, seems promising but often crashes when attempting to detect live bluetooth signals. Additional testing and bug fixing is needed to achieve a fully functional bluetooth connection, and will be a primary goal in the days to come.
@@ -19,6 +19,7 @@ TIVA Launchpad (main programs and data parsing)
 - Lights to turn on when blindspot trigger met
 - Accelerometer to aid in detecting crashes
 - Gyroscope to aid in detecting crashes
+- GPIO interrupt on crash detection
   
 Bluetooth Module (bridge communication between mobile app and helmet hardware)
 - Send crash data to mobile phone to trigger emergency response
@@ -32,8 +33,7 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- Currently the math for how far away the object is has not been developed properly. It repeatedly says "Distance: 0" regardless of how far away the detected object is. We will work on fixing that for the next milestone.
-- Crash Detection has not been fully tested yet, false negatives/positives exist
+-Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
 
 ### App
 - GPS does not scrape real-time location. Uses placeholder coordinates for now.
