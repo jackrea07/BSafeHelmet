@@ -37,10 +37,8 @@ Mobile App (pairs to helmet via bluetooth)
 
 ### App
 - GPS does not scrape real-time location. Uses placeholder coordinates for now.
-- Map has small watermark tab at the bottom and zoom buttons that shouldn't be there.
-- The navbar is not displaying the title as intended (the navigation button should appear to the left side of the title, and the title should be centered)
-- The bluetooth module (pybluez) is producing errors when attempting to import and implement it into the app.
-- There is not yet a way to reliably move between the bluetooth connection and home pages without crashing the program.
+- Map borders are not properly scaling to the size of the phone screen.
+- The bluetooth library (Bleak) is causing errors/crashes when attempting to detect nearby bluetooth signals.
 
 ### Bluetooth communication
 - The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth to remedy this an ESP32 will be used to do all the audio/bluetooth processing.
