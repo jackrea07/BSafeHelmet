@@ -1,4 +1,4 @@
-0) IF PULLING FROM GITHUB, RUN THE FOLLOWING COMMANDS
+0) IF ALREADY COMPILED PREVIOUSLY & PULLING FROM GITHUB, RUN THE FOLLOWING COMMANDS
 
 First DELETE the beeware-venv that exists in BSAFEHELMET directory
 Then, navigate to BSafeHelmet directory if necessary (Should be default)
@@ -15,33 +15,27 @@ pip install toga
 
 cd BSafe_App
 cd bsafe
-briefcase dev
+briefcase run -u
 
 
 1) INITIALIZE ENVIRONMENT
-md Bsafe
-cd BSafe_App
 python -m venv beeware-venv
 beeware-venv\Scripts\activate
+cd BSafe_App
 
-1.2) RETURN TO ENVIRONMENT
-cd BSafe_App
-python -m venv beeware-venv
-beeware-venv\Scripts\activate
-****SKIP to step 4*****
 
 2) INSTALL BEEWARE TOOLS
 python -m pip install briefcase
 
 
-3) BOOTSTRAP NEW PROJECT
+3) BOOTSTRAP NEW PROJECT (IGNORE THIS ONE)
 briefcase new
 Fill out Name, URL, email, etc...
 
 
 4) RUN DEFAULT APP IN DEVELOPER MODE
 cd 'bsafe'
-briefcase dev
+briefcase dev **NOTE: map will not display properly in dev mode**
 
 
 5) MODIFY CONTENT
@@ -51,6 +45,7 @@ open src/bsafe/app.py and make changes as necessary
 6) CREATE APPLICATION SCAFFOLD & BUILD APPLICATION
 briefcase create
 briefcase build
+
 
 7) RUN THE APP & BUILD INSTALLER
 briefcase run
@@ -63,5 +58,6 @@ After doing so, 'briefcase dev' will reflect changes but 'briefcase run' will no
 To update, use 'briefcase update'
 To update AND run in a single step, use 'briefcase run -u'
 
-9) TO RUN ON 'ANDROID'
+
+9) TO RUN ON VIRTUAL 'ANDROID'
 briefcase run android -u -r -d "@beePhone"
