@@ -6,7 +6,7 @@
 For the Pre-Alpha build, the persistent state of polling the ultra-sonic sensor for objects has been developed. The program is able to detect when an object is in range of the sensor. Additionally, we have interfaced with an IMU to grab accelerometer and gyroscope data. This exact accelerometer will need to be tested in the near future to determine if it has high enough quality for the finished product. Lastly, we have a RTOS to run the future program on. All we need to do is add proper threads.
 
 ### App
-After researching different methods of app building, we decided to build our app using the Beeware framework, and first completed some tutorial work to familiarize ourselves with how it operates. We then created a simple UI design for our app homepage to visualize what the app design will look like. We were able to display a real map at a specified GPS location, in addition to a mock up of a nav bar and a button to connect to a helmet via bluetooth. We are also in the process of implementing bluetooth into the app through the Bleak python library, though it does not yet successfully detect any devices emitting a bluetooth signal.
+For the project prototype milestone, we focused on two things: updating the UI and implementing functional bluetooth connectivity. For the UI, we first sought to have the map display encompass the entire screen, except with a navigation bar at the bottom of the screen (positioned over the map). The navbar contains three buttons, each of which display to the user a different window depending on which was clicked. The bluetooth button and corresponding screen attempts to locate a bluetooth signal, though we have not yet succeeded in detecting an actual signal. The map page (which is displayed by default) allows users to scroll and zoom freely, and displays a POI marker at the location provided. The profile page has a text input box for users to input their phone number so that it may be used to call emergency services in the event of a crash.
 
 ### Bluetooth Communication
 The HC05 bluetooth module can send/recieve information over a serial port on a PC. This will be insufficient for our project so we ordered a more sophisticated bluetooth communication module.
@@ -38,6 +38,8 @@ Mobile App (pairs to helmet via bluetooth)
 ### App
 - GPS does not scrape real-time location. Uses placeholder coordinates for now.
 - Map borders are not properly scaling to the size of the phone screen.
+- Navbar placement is not static, and is displayed in awkward locations for the bluetooth and profile pages.
+- Button icons not displaying properly, using text as placeholder in the meantime
 - The bluetooth library (Bleak) is causing errors/crashes when attempting to detect nearby bluetooth signals.
 
 ### Bluetooth communication
