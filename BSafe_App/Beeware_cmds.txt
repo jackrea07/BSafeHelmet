@@ -1,6 +1,9 @@
 0) IF PULLING FROM GITHUB, RUN THE FOLLOWING COMMANDS
 
-Navigate to BSafeHelmet directory if necessary (Should be default)
+First DELETE the beeware-venv that exists in BSAFEHELMET directory
+Then, navigate to BSafeHelmet directory if necessary (Should be default)
+
+python -m venv beeware-venv
 beeware-venv\Scripts\activate
 
 (SHOULD ENTER beeware-venv VIRTUAL ENVIRONMENT)
@@ -8,20 +11,22 @@ beeware-venv\Scripts\activate
 python -m pip install briefcase
 pip install folium
 pip install tornado
+pip install toga
 
 cd BSafe_App
 cd bsafe
 briefcase dev
 
+
 1) INITIALIZE ENVIRONMENT
 md Bsafe
 cd BSafe_App
-py -m venv beeware-venv
+python -m venv beeware-venv
 beeware-venv\Scripts\activate
 
 1.2) RETURN TO ENVIRONMENT
 cd BSafe_App
-py -m venv beeware-venv
+python -m venv beeware-venv
 beeware-venv\Scripts\activate
 ****SKIP to step 4*****
 
@@ -47,10 +52,6 @@ open src/bsafe/app.py and make changes as necessary
 briefcase create
 briefcase build
 
-6.1) FOLIUM INSTALL
-pip install folium
-pip install tornado
-
 7) RUN THE APP & BUILD INSTALLER
 briefcase run
 briefcase package
@@ -61,3 +62,6 @@ Make any changes to the app as desired (such as in app.py)
 After doing so, 'briefcase dev' will reflect changes but 'briefcase run' will not.
 To update, use 'briefcase update'
 To update AND run in a single step, use 'briefcase run -u'
+
+9) TO RUN ON 'ANDROID'
+briefcase run android -u -r -d "@beePhone"
