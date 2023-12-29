@@ -17,6 +17,7 @@
 "./MultimodDrivers/src/multimod_joystick.obj"
 "./MultimodDrivers/src/multimod_spi.obj"
 "./MultimodDrivers/src/multimod_uart.obj"
+"./MultimodDrivers/src/ultrasonic_driver.obj"
 "./driverlib/adc.obj"
 "./driverlib/aes.obj"
 "./driverlib/can.obj"
@@ -52,4 +53,6 @@
 "./driverlib/usb.obj"
 "./driverlib/watchdog.obj"
 "../tm4c123gh6pm.cmd"
+"../driverlib/ccs/Debug/driverlib.lib"
+"../driverlib/rvmdk/driverlib.lib"
 -llibc.a
