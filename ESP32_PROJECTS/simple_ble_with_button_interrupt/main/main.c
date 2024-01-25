@@ -30,7 +30,7 @@
 char *TAG = "BSafeBluetooth";
 uint8_t ble_addr_type;
 void ble_app_advertise(void);
-bool fucked = false;
+bool crashed = false;
 
 int state = 0;
 QueueHandle_t interputQueue;
@@ -51,11 +51,11 @@ void Crash_Detection(void *params)
         {
             if(level == 0){
                 level = 1;
-                fucked = true;
+                crashed = true;
             }
             else{
                 level = 0;
-                fucked = false;
+                crashed = false;
             }
             printf("GPIO %d was pressed %d times. fucked is %d\n", pinNumber, count++, fucked);
             gpio_set_level(LED_PIN, level);

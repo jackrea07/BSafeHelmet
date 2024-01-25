@@ -115,4 +115,8 @@ SUBDIRS := \
 G8RTOS/src \
 MultimodDrivers/src \
 driverlib \
+driverlib/ccs/Debug \
+driverlib/ewarm/Exe \
+driverlib/gcc \
+driverlib/rvmdk \
 
