@@ -15,6 +15,8 @@ volatile uint32_t ui32EchoDuration = 0;     // Variable to store duration for wh
 volatile uint32_t ui32ObstacleDist = 0;     // Variable to store distance of the Obstacle
 volatile uint32_t noCount = 0;
 volatile uint32_t obstCount = 0;
+char data[3];
+uint8_t index = 0;
 
 void Idle_Thread(void) {
     time_t t;
@@ -52,7 +54,7 @@ void Gyro_Thread(void){
     }
 }
 
-void Ultrasonic_Thread(void){
+/*void Ultrasonic_Thread(void){
     while (1){
         if (boolTrigCondition){
             // Load the Timer with value for generating a  delay of 10 uS.
@@ -97,63 +99,21 @@ void Ultrasonic_Thread(void){
         }
     }
 }
+*/
 
-/*void Ultrasonic_Thread(void){
-    uint32_t samples[10] = {0,0,0,0,0,0,0,0,0,0};
-    uint8_t index = 0;
-    uint32_t average = 0;
-    while (1){
-        if (boolTrigCondition){
-            // Load the Timer with value for generating a  delay of 10 uS.
-            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -10);
-            // Make the Trigger Pin (PA3) High
-            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
-            // Enable the Timer0 to cause an interrupt when timeout occurs
-            TimerEnable(TIMER0_BASE, TIMER_A);
-            // Disable the condition for Trigger Pin Switching
-            boolTrigCondition = 0;
-            //for (iter = 0; iter<sizeof(itworked); iter++ ) UARTCharPut(UART0_BASE, itworked[iter]);
+void Ultrasonic_Thread(void){
+    while(1){
+        G8RTOS_WaitSemaphore(&sem_sensor);
+        G8RTOS_WaitSemaphore(&sem_uart);
+        for(int i = 0; i < 3; i++){
+            UARTprintf("%c", data[i]);
         }
-        while(checkEcho){
-            if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 0){
-                 while(GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) != 0);
-                ui32EchoDuration = TimerValueGet(TIMER2_BASE, TIMER_A);
-                // Disable Timer2 to stop measuring duration for which Echo Pin is High
-                TimerDisable(TIMER2_BASE, TIMER_A);
-                // Convert the Timer Duration to Distance Value according to Ultrasonic's formula
-                ui32ObstacleDist = ui32EchoDuration / 4640;
-                // Print
-                if(index >= 10)
-                {
-                    index = 0;
-                }
-                if(ui32ObstacleDist < 1200)
-                {
-                    samples[index] = ui32ObstacleDist;
-                    index++;
-                }
-                //add to
-
-                for(uint8_t x = 0; x < 10; x++)
-                {
-                    average+= samples[x];
-                }
-                average /= 10;
-
-
-
-                G8RTOS_WaitSemaphore(&sem_uart);
-                UARTprintf("distance: %d\n", average);
-                G8RTOS_SignalSemaphore(&sem_uart);
-                // Enable condition for Trigger Pulse
-                boolTrigCondition = 1;
-                checkEcho = 0;
-                GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
-                sleep(100);
-            }
-        }
+        UARTprintf(" inches\n");
+        G8RTOS_SignalSemaphore(&sem_uart);
+        G8RTOS_SignalSemaphore(&sem_sensor);
     }
-}*/
+}
+
 
 void Timer0AIntHandler(void){
     // The ISR for Timer0 Interrupt Handling
@@ -176,4 +136,20 @@ void PortAIntHandler(void){
     // Enable Timer2 to start measuring duration for which Echo Pin is High
     TimerEnable(TIMER2_BASE, TIMER_A);
     GPIOIntDisable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
+}
+
+void UART4Handler(void){
+    char temp = UART4_DR_R;
+    if (temp == 'R'){
+        index = 0;
+        return;
+    }
+    else{
+        data[index] = temp;
+        index++;
+    }
+    if(index == 3){
+        G8RTOS_SignalSemaphore(&sem_sensor);
+        return;
+    }
 }

@@ -61,17 +61,19 @@ int main(void) {
 
     IntMasterDisable();
     GPIO_Init();
-    Timers_Init();
+    //Timers_Init();
     IntMasterEnable();
 
     G8RTOS_InitSemaphore(&sem_uart, 1);
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
+    G8RTOS_InitSemaphore(&sem_sensor, 0);
     G8RTOS_AddThread(Idle_Thread, 255, "idle\0");
-    G8RTOS_AddThread(Gyro_Thread, 5, "camera\0");
-    G8RTOS_AddThread(Accel_Thread, 6, "buttons\0");
+    //G8RTOS_AddThread(Gyro_Thread, 5, "camera\0");
+    //G8RTOS_AddThread(Accel_Thread, 6, "buttons\0");
     G8RTOS_AddThread(Ultrasonic_Thread, 4, "ultrasonic\0");
-    G8RTOS_Add_APeriodicEvent(Timer0AIntHandler, 1, INT_TIMER0A);
-    G8RTOS_Add_APeriodicEvent(PortAIntHandler, 1, INT_GPIOA);
+    //G8RTOS_Add_APeriodicEvent(Timer0AIntHandler, 1, INT_TIMER0A);
+    //G8RTOS_Add_APeriodicEvent(PortAIntHandler, 1, INT_GPIOA);
+    G8RTOS_Add_APeriodicEvent(UART4Handler, 1, INT_UART4);
 
     G8RTOS_Launch();
     while (1);

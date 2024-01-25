@@ -47,8 +47,25 @@ void UART_Init() {
     // Configure UART baud rate
 
     UARTStdioConfig(0, 115200, SysCtlClockGet());
+////////////////////////////////////////////////////////////////////
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART4);
+    SysCtlDelay(1000);
 
+    GPIOPinConfigure(GPIO_PC4_U4RX);
+    GPIOPinConfigure(GPIO_PC5_U4TX);
+    GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
+    UARTFIFODisable(UART4_BASE);
+
+    // Set UART clock source
+    UARTClockSourceSet(UART4_BASE, UART_CLOCK_SYSTEM);
+
+    UARTIntEnable(UART4_BASE, UART_INT_RX);
+
+    UARTConfigSetExpClk(UART4_BASE, SysCtlClockGet(), 9600, UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+
+    SysCtlDelay(1000);
 }
 
 /********************************Public Functions***********************************/
