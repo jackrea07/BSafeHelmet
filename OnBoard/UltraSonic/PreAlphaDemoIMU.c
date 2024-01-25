@@ -37,6 +37,7 @@ void Timers_Init(void){
 
 void GPIO_Init(void){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2);
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
     // Set the PA2 port as Input with a weak Pull-down. Echo Pin
@@ -51,15 +52,17 @@ void GPIO_Init(void){
     GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_2);
     GPIOPadConfigSet(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PIN_2);
+    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, 0);
 }
 
 int main(void) {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     G8RTOS_Init();
+    IntMasterDisable();
     multimod_init();
 
-    IntMasterDisable();
+
     GPIO_Init();
     //Timers_Init();
     IntMasterEnable();

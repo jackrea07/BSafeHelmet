@@ -103,6 +103,7 @@ void Gyro_Thread(void){
 
 void Ultrasonic_Thread(void){
     while(1){
+        GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PIN_2);
         G8RTOS_WaitSemaphore(&sem_sensor);
         G8RTOS_WaitSemaphore(&sem_uart);
         for(int i = 0; i < 3; i++){

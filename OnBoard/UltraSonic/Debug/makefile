@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS
+CG_TOOL_ROOT := C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -65,8 +65,6 @@ ORDERED_OBJS += \
 "./driverlib/usb.obj" \
 "./driverlib/watchdog.obj" \
 "../tm4c123gh6pm.cmd" \
-"../driverlib/ccs/Debug/driverlib.lib" \
-"../driverlib/rvmdk/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -81,18 +79,10 @@ RMDIR := RMDIR /S/Q
 -include G8RTOS/src/subdir_vars.mk
 -include MultimodDrivers/src/subdir_vars.mk
 -include driverlib/subdir_vars.mk
--include driverlib/ccs/Debug/subdir_vars.mk
--include driverlib/ewarm/Exe/subdir_vars.mk
--include driverlib/gcc/subdir_vars.mk
--include driverlib/rvmdk/subdir_vars.mk
 -include subdir_rules.mk
 -include G8RTOS/src/subdir_rules.mk
 -include MultimodDrivers/src/subdir_rules.mk
 -include driverlib/subdir_rules.mk
--include driverlib/ccs/Debug/subdir_rules.mk
--include driverlib/ewarm/Exe/subdir_rules.mk
--include driverlib/gcc/subdir_rules.mk
--include driverlib/rvmdk/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -196,14 +186,14 @@ EXE_OUTPUTS__QUOTED += \
 
 
 # All Target
-all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(A_SRCS) $(GEN_CMDS)
+all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@$(MAKE) --no-print-directory -Onone "UltraSonic.out"
 
 # Tool invocations
-UltraSonic.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(A_SRCS) $(GEN_CMDS)
+UltraSonic.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"UltraSonic.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="UltraSonic_linkInfo.xml" --rom_model -o "UltraSonic.out" $(ORDERED_OBJS) $(A_SRCS)
+	"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"UltraSonic.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="UltraSonic_linkInfo.xml" --rom_model -o "UltraSonic.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 

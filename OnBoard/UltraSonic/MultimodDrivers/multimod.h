@@ -17,6 +17,7 @@ static void multimod_init() {
     //OPT3001_Init();
     //PCA9956b_Init();
     UART_Init();
+    UART_READ_INIT();
 }
 
 #endif /* MULTIMOD_H_ */
