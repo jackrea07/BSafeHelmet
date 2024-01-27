@@ -16,7 +16,7 @@ static void multimod_init() {
     BMI160_Init();
     //OPT3001_Init();
     //PCA9956b_Init();
-    UART_Init();
+    //UART_Init();
     ADC_INIT();
     ADC1_INIT();
 }

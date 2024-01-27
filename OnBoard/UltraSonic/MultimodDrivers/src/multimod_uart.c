@@ -74,7 +74,7 @@ void ADC1_INIT(void){
 
     ADCSequenceConfigure(ADC1_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 
-    ADCSequenceStepConfigure(ADC1_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE |
+    ADCSequenceStepConfigure(ADC1_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE |
                                          ADC_CTL_END);
 
     ADCSequenceEnable(ADC1_BASE, 3);

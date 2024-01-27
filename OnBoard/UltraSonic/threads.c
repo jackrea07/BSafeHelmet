@@ -34,7 +34,7 @@ void Accel_Thread(void){
         int16_t x_accel_value = BMI160_AccelXGetResult();
         G8RTOS_SignalSemaphore(&sem_I2CA);
         G8RTOS_WaitSemaphore(&sem_uart);
-        UARTprintf("X Accel Value: %d\n", x_accel_value);
+        //UARTprintf("X Accel Value: %d\n", x_accel_value);
         G8RTOS_SignalSemaphore(&sem_uart);
         sleep(1000);
     }
@@ -48,7 +48,7 @@ void Gyro_Thread(void){
         G8RTOS_SignalSemaphore(&sem_I2CA);
         if (x_gyro_value > 5000){
             G8RTOS_WaitSemaphore(&sem_uart);
-            UARTprintf("Crash Detected! Gyro Value: %d\n", x_gyro_value);
+            //UARTprintf("Crash Detected! Gyro Value: %d\n", x_gyro_value);
             G8RTOS_SignalSemaphore(&sem_uart);
             GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, 0);
             SysCtlDelay(10000000);
@@ -77,7 +77,7 @@ void Ultrasonic_Thread(void){
         ADCIntClear(ADC1_BASE, 3);
         ADCSequenceDataGet(ADC1_BASE, 3, ADC1Values);
         distance1 = ((((float)ADC1Values[0])/1029)*1000)/9.8;
-        UARTprintf("second: %d\n", (int32_t)distance1);
+        //UARTprintf("second: %d\n", (int32_t)distance1);
         if(distance1 < 100){
             GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
         }
