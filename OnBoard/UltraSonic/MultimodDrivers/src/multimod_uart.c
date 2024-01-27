@@ -19,6 +19,7 @@
 #include <driverlib/uart.h>
 #include <driverlib/sysctl.h>
 #include <driverlib/pin_map.h>
+#include <driverlib/adc.h>
 
 /************************************Includes***************************************/
 
@@ -49,24 +50,36 @@ void UART_Init() {
     UARTStdioConfig(0, 115200, SysCtlClockGet());
 }
 
-void UART_READ_INIT(void){
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART4);
-    SysCtlDelay(1000);
+void ADC_INIT(void){
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
+    SysCtlDelay(3);
 
-    GPIOPinConfigure(GPIO_PC4_U4RX);
-    GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4);
+    ADCReferenceSet(ADC0_BASE, ADC_REF_INT);
 
-    UARTFIFODisable(UART4_BASE);
+    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 
-    // Set UART clock source
-    UARTClockSourceSet(UART4_BASE, UART_CLOCK_SYSTEM);
+    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE |
+                                     ADC_CTL_END);
 
-    UARTIntEnable(UART4_BASE, UART_INT_RX);
+    ADCSequenceEnable(ADC0_BASE, 3);
 
-    UARTConfigSetExpClk(UART4_BASE, SysCtlClockGet(), 9600, UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE);
+    ADCIntClear(ADC0_BASE, 3);
+}
 
-    SysCtlDelay(1000);
+void ADC1_INIT(void){
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC1);
+    SysCtlDelay(3);
+
+    ADCReferenceSet(ADC1_BASE, ADC_REF_INT);
+
+    ADCSequenceConfigure(ADC1_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+
+    ADCSequenceStepConfigure(ADC1_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE |
+                                         ADC_CTL_END);
+
+    ADCSequenceEnable(ADC1_BASE, 3);
+
+    ADCIntClear(ADC1_BASE, 3);
 }
 
 /********************************Public Functions***********************************/

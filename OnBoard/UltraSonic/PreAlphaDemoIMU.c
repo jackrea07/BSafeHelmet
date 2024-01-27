@@ -39,20 +39,21 @@ void GPIO_Init(void){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2);
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
-    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
+    //GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
     // Set the PA2 port as Input with a weak Pull-down. Echo Pin
-    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);
-    GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
+    //GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);
+    //GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
     // Configure and enable the Interrupt on both edges for PA2. Echo Pin
-    IntEnable(INT_GPIOA);
+    //IntEnable(INT_GPIOA);
     //IntRegister(INT_GPIOA, PortAIntHandler);
-    GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_RISING_EDGE);
-    GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
+    //GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_RISING_EDGE);
+    //GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_2);
     GPIOPadConfigSet(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PIN_2);
     GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, 0);
+    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, 0);
 }
 
 int main(void) {
@@ -71,12 +72,9 @@ int main(void) {
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_sensor, 0);
     G8RTOS_AddThread(Idle_Thread, 255, "idle\0");
-    //G8RTOS_AddThread(Gyro_Thread, 5, "camera\0");
-    //G8RTOS_AddThread(Accel_Thread, 6, "buttons\0");
+    G8RTOS_AddThread(Gyro_Thread, 5, "camera\0");
+    G8RTOS_AddThread(Accel_Thread, 6, "buttons\0");
     G8RTOS_AddThread(Ultrasonic_Thread, 4, "ultrasonic\0");
-    //G8RTOS_Add_APeriodicEvent(Timer0AIntHandler, 1, INT_TIMER0A);
-    //G8RTOS_Add_APeriodicEvent(PortAIntHandler, 1, INT_GPIOA);
-    G8RTOS_Add_APeriodicEvent(UART4Handler, 1, INT_UART4);
 
     G8RTOS_Launch();
     while (1);

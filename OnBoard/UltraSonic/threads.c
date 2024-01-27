@@ -17,6 +17,10 @@ volatile uint32_t noCount = 0;
 volatile uint32_t obstCount = 0;
 char data[3];
 uint8_t index = 0;
+uint32_t ADC0Values[1];
+uint32_t ADC1Values[1];
+float distance0 = 0;
+float distance1 = 0;
 
 void Idle_Thread(void) {
     time_t t;
@@ -54,103 +58,35 @@ void Gyro_Thread(void){
     }
 }
 
-/*void Ultrasonic_Thread(void){
-    while (1){
-        if (boolTrigCondition){
-            // Load the Timer with value for generating a  delay of 10 uS.
-            TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 100000) -10);
-            // Make the Trigger Pin (PA3) High
-            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
-            // Enable the Timer0 to cause an interrupt when timeout occurs
-            TimerEnable(TIMER0_BASE, TIMER_A);
-            // Disable the condition for Trigger Pin Switching
-            boolTrigCondition = 0;
-            //for (iter = 0; iter<sizeof(itworked); iter++ ) UARTCharPut(UART0_BASE, itworked[iter]);
-        }
-        while(checkEcho){
-            if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 0){
-                ui32EchoDuration = TimerValueGet(TIMER2_BASE, TIMER_A);
-                // Disable Timer2 to stop measuring duration for which Echo Pin is High
-                TimerDisable(TIMER2_BASE, TIMER_A);
-                // Convert the Timer Duration to Distance Value according to Ultrasonic's formula
-                ui32ObstacleDist = ui32EchoDuration / 4640;
-
-                if(ui32ObstacleDist > 30 && ui32ObstacleDist < 450){
-                    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_PIN_4);
-                }
-                else {
-                    obstCount+=1;
-                    //GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, 0);
-                }
-                if(obstCount > 10){
-                    obstCount = 0;
-                    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, 0);
-                }
-                // Print
-                G8RTOS_WaitSemaphore(&sem_uart);
-                UARTprintf("distance: %d\n", ui32ObstacleDist);
-                G8RTOS_SignalSemaphore(&sem_uart);
-                // Enable condition for Trigger Pulse
-                boolTrigCondition = 1;
-                checkEcho = 0;
-                GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
-                sleep(100);
-            }
-        }
-    }
-}
-*/
-
 void Ultrasonic_Thread(void){
     while(1){
-        GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PIN_2);
-        G8RTOS_WaitSemaphore(&sem_sensor);
-        G8RTOS_WaitSemaphore(&sem_uart);
-        for(int i = 0; i < 3; i++){
-            UARTprintf("%c", data[i]);
+        ADCProcessorTrigger(ADC0_BASE, 3);
+        while(!ADCIntStatus(ADC0_BASE, 3, false));
+        ADCIntClear(ADC0_BASE, 3);
+        ADCSequenceDataGet(ADC0_BASE, 3, ADC0Values);
+        distance0 = ((((float)ADC0Values[0])/1029)*1000)/9.8;
+        //UARTprintf("first: %d\n", (int32_t)distance0);
+        if(distance0 < 100){
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_PIN_2);
         }
-        UARTprintf(" inches\n");
-        G8RTOS_SignalSemaphore(&sem_uart);
-        G8RTOS_SignalSemaphore(&sem_sensor);
+        else
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, 0);
+        //////////////////////////////////////////////////
+        ADCProcessorTrigger(ADC1_BASE, 3);
+        while(!ADCIntStatus(ADC1_BASE, 3, false));
+        ADCIntClear(ADC1_BASE, 3);
+        ADCSequenceDataGet(ADC1_BASE, 3, ADC1Values);
+        distance1 = ((((float)ADC1Values[0])/1029)*1000)/9.8;
+        UARTprintf("second: %d\n", (int32_t)distance1);
+        if(distance1 < 100){
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
+        }
+        else
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, 0);
+        sleep(20);
     }
 }
 
 
-void Timer0AIntHandler(void){
-    // The ISR for Timer0 Interrupt Handling
-    // Clear the timer interrupt
-    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-    // Disable the timer
-    TimerDisable(TIMER0_BASE, TIMER_A);
-    // Make the Trigger Pin (PA3) Low
-    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, 0x00);
-}
 
-void PortAIntHandler(void){
-    // The ISR for GPIO PortA Interrupt Handling
-    // Clear the GPIO Hardware Interrupt
-    checkEcho = 1;
-    GPIOIntClear(GPIO_PORTA_BASE , GPIO_INT_PIN_2);
 
-    // Initialize Timer2 with value 0
-    HWREG(TIMER2_BASE + TIMER_O_TAV) = 0;
-    // Enable Timer2 to start measuring duration for which Echo Pin is High
-    TimerEnable(TIMER2_BASE, TIMER_A);
-    GPIOIntDisable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
-}
-
-void UART4Handler(void){
-    char temp = UART4_DR_R;
-    if (temp == 'R'){
-        index = 0;
-        return;
-    }
-    else{
-        data[index] = temp;
-        index++;
-    }
-    if(index == 3){
-        G8RTOS_SignalSemaphore(&sem_sensor);
-        return;
-    }
-}
