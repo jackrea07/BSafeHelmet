@@ -1,4 +1,7 @@
 # BSafeHelmet
+## Link to Repo
+https://github.com/jackrea07/BSafeHelmet/tree/main
+
 ## Project Description
 This project introduces a state-of-the-art smart helmet designed to significantly enhance the safety of motorcycle and moped riders. Equipped with advanced sensors, the helmet is capable of detecting objects in the rider's blind spots, alerting them through LED indicators integrated into the helmet. This feature is pivotal in preventing potential collisions by increasing situational awareness. Additionally, the helmet boasts Bluetooth connectivity, seamlessly pairing with a specialized mobile app. This app plays a crucial role in safety, offering live GPS tracking that displays the rider's current location on a map, ensuring they are always traceable during their journey.
 
@@ -21,17 +24,6 @@ Mobile App (pairs to helmet via bluetooth)
 - Allows user to connect phone audio to helmet speakers for music
 - Tracks live location of user via GPS modules in phone
 - If crash detected, calls emergency response teams for help using user location
-
-## Completed Work
-
-### Blind-Spot/Crash Detection
-For the prototype, the persistent state of polling the ultra-sonic sensor for objects has been developed and integrated as a thread within the RTOS. The program is able to detect when an object is in range of the sensor, and display this info via a LED. Additionally, we have interfaced with an IMU to grab accelerometer and gyroscope data. The IMU data can be manipulated in such a way to determine when a crash has occurred and relay to the bluetooth interface. This functionality has been deployed within a thread in the RTOS.
-
-### App
-For the project prototype milestone, we focused on two things: updating the UI and implementing functional bluetooth connectivity. For the UI, we first sought to have the map display encompass the entire screen, except with a navigation bar at the bottom of the screen (positioned over the map). The navbar contains three buttons, each of which display to the user a different window depending on which was clicked. The bluetooth button and corresponding screen attempts to locate a bluetooth signal, though we have not yet succeeded in detecting an actual signal. The map page (which is displayed by default) allows users to scroll and zoom freely, and displays a POI marker at the location provided. The profile page has a text input box for users to input their phone number so that it may be used to call emergency services in the event of a crash. The bluetooth module has proven difficult to implement, and we have encountered many roadblocks in doing so. We initially attempted to utilize the PyBluez module, but experienced a number of crashes and bugs before pursuing a different strategy. The current bluetooth library we are implementing, Bleak, seems promising but often crashes when attempting to detect live bluetooth signals. Additional testing and bug fixing is needed to achieve a fully functional bluetooth connection, and will be a primary goal in the days to come.
-
-### Bluetooth Communication
-The HC05 bluetooth module can send/recieve information over a serial port on a PC. This will be insufficient for our project so we ordered a more sophisticated bluetooth communication module.
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
