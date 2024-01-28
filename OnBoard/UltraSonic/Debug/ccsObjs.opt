@@ -17,6 +17,7 @@
 "./MultimodDrivers/src/multimod_joystick.obj"
 "./MultimodDrivers/src/multimod_spi.obj"
 "./MultimodDrivers/src/multimod_uart.obj"
+"./MultimodDrivers/src/ultrasonic_driver.obj"
 "./driverlib/adc.obj"
 "./driverlib/aes.obj"
 "./driverlib/can.obj"

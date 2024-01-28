@@ -19,6 +19,7 @@
 #include <driverlib/uart.h>
 #include <driverlib/sysctl.h>
 #include <driverlib/pin_map.h>
+#include <driverlib/adc.h>
 
 /************************************Includes***************************************/
 
@@ -47,8 +48,38 @@ void UART_Init() {
     // Configure UART baud rate
 
     UARTStdioConfig(0, 115200, SysCtlClockGet());
+}
 
+void ADC_INIT(void){
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
+    SysCtlDelay(3);
 
+    ADCReferenceSet(ADC0_BASE, ADC_REF_INT);
+
+    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+
+    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH1 | ADC_CTL_IE |
+                                     ADC_CTL_END);
+
+    ADCSequenceEnable(ADC0_BASE, 3);
+
+    ADCIntClear(ADC0_BASE, 3);
+}
+
+void ADC1_INIT(void){
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC1);
+    SysCtlDelay(3);
+
+    ADCReferenceSet(ADC1_BASE, ADC_REF_INT);
+
+    ADCSequenceConfigure(ADC1_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+
+    ADCSequenceStepConfigure(ADC1_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE |
+                                         ADC_CTL_END);
+
+    ADCSequenceEnable(ADC1_BASE, 3);
+
+    ADCIntClear(ADC1_BASE, 3);
 }
 
 /********************************Public Functions***********************************/
