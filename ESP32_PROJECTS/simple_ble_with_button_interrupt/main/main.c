@@ -12,19 +12,19 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "esp_log.h"
-#include "esp_nimble_hci.h"
-#include "nimble/nimble_port.h"
-#include "nimble/nimble_port_freertos.h"
-#include "host/ble_hs.h"
-#include "services/gap/ble_svc_gap.h"
-#include "services/gatt/ble_svc_gatt.h"
+//#include "esp_nimble_hci.h"
+//#include "nimble/nimble_port.h"
+//#include "nimble/nimble_port_freertos.h"
+//#include "host/ble_hs.h"
+//#include "services/gap/ble_svc_gap.h"
+//#include "services/gatt/ble_svc_gatt.h"
 #include "sdkconfig.h"
 
 //includes for button interrupt
 #include "freertos/queue.h"
 #include "driver/gpio.h"
-
-#define INPUT_PIN 23
+#include "ble_handling.c"
+#define INPUT_PIN 34
 #define LED_PIN 2
 
 char *TAG = "BSafeBluetooth";
@@ -50,21 +50,25 @@ void Crash_Detection(void *params)
         if (xQueueReceive(interputQueue, &pinNumber, portMAX_DELAY))
         {
             if(level == 0){
+                uint8_t message[] = {'c','r','a','s','h'};
+                esp_ble_gatts_set_attr_value(gatt_db_handle_table[IDX_CHAR_VAL_A], sizeof(message),message);
                 level = 1;
                 crashed = true;
             }
             else{
+                uint8_t message[] = {'n', 'o', 'c','r','a','s','h'};
+                esp_ble_gatts_set_attr_value(gatt_db_handle_table[IDX_CHAR_VAL_A], sizeof(message),message);
                 level = 0;
                 crashed = false;
             }
-            printf("GPIO %d was pressed %d times. fucked is %d\n", pinNumber, count++, fucked);
+            printf("GPIO %d was pressed %d times. crashed is %d\n", pinNumber, count++, crashed);
             gpio_set_level(LED_PIN, level);
         }
     }
 }
 
 
-
+/*
 // Read data from ESP32 defined as server
 static int device_read(uint16_t con_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
@@ -146,9 +150,10 @@ void host_task(void *param)
 {
     nimble_port_run(); // This function will return only when nimble_port_stop() is executed
 }
-
+*/
 void app_main()
-{
+{   
+    /*
     //ble and nvs init
     nvs_flash_init();                          // 1 - Initialize NVS flash using
     esp_nimble_hci_init();      // 2 - Initialize ESP controller
@@ -161,8 +166,9 @@ void app_main()
     ble_hs_cfg.sync_cb = ble_app_on_sync;      // 5 - Initialize application
     nimble_port_freertos_init(host_task);      // 6 - Run the thread
 
-
+    */
     //gpio external interrupt stuff & pin config
+    ble_main();
     gpio_reset_pin(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
@@ -171,7 +177,8 @@ void app_main()
     gpio_pulldown_en(INPUT_PIN);
     gpio_pullup_dis(INPUT_PIN);
     gpio_set_intr_type(INPUT_PIN, GPIO_INTR_POSEDGE);
-
+    uint8_t message[] = {'n', 'o', 'c','r','a','s','h'};
+    esp_ble_gatts_set_attr_value(gatt_db_handle_table[IDX_CHAR_VAL_A], sizeof(message),message);
     interputQueue = xQueueCreate(10, sizeof(int));
     xTaskCreate(Crash_Detection, "Crash_Detection", 2048, NULL, 1, NULL);
 
