@@ -44,7 +44,7 @@ Mobile App (pairs to helmet via bluetooth)
 - Note: if you receive include errors upon first build, right click the project name ("UltraSonic") in the Project Explorer tab and click on "Properties". Then navigate to Build -> Arm Properties -> Include Options. Delete the current path to the SW-TM4C-2.2.0.295 SDK and replace with your exact path to the SDK. The build should now work with no errors.
 
 ### BSafeBluetooth ESP32 Build Instructions
--Detailed walkthrough located in /ESP32_PROJECTS/ESP-SETUP.md
+- Detailed walkthrough located in /ESP32_PROJECTS/ESP-SETUP.md
 
 ### BSafe Mobile App Build Instructions
 - Acquire an Android 5+ mobile device.
