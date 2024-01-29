@@ -29,15 +29,10 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
--Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
+- Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
 
-### App
+### App/Bluetooth
 - Difficulty reading crash signal data when sent by ESP device.
-
-### Bluetooth communication
-- The HC05 is meant for simple bluetooth over serial and cannot recieve reasonable audio quality over bluetooth, nor can it send regular data over bluetooth to remedy this an ESP32 will be used to do all the audio/bluetooth processing.
-- HC05 does not have any working code in this github as of 11/5, and the code included in main3.c has an unknown bug (clock speed?). It does however work in Keil uVision with their packages and header files.
-
 
 ## Building the BSafe components
 ### OnBoard project
