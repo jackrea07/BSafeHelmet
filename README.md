@@ -6,6 +6,7 @@ Journal log is in the github repo!
 
 ## Link to Video Demos
 App: https://drive.google.com/file/d/1cn6J3K3kYjocIX6EqjkMuE9qkF_paQY-/view?usp=sharing
+
 Helmet/Hardware: https://youtu.be/bsbsSCvr9zM
 
 ## Project Description
