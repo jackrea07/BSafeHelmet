@@ -39,6 +39,17 @@ Mobile App (pairs to helmet via bluetooth)
 ### App/Bluetooth
 - Difficulty reading crash signal data when sent by ESP device.
 
+## Work Completed for Beta Build
+### Helmet/Hardware
+
+### Bluetooth/Software
+- Implemented improvements in the Bluetooth connection logic to stabilize the link between the BLE device and the phone.
+- Refined data handling processes to ensure accurate reception and processing of data sent by the ESP 32.
+- Performed extensive testing to map out and evaluate all user interface paths related to emergency contact settings.
+- Modified the app's logic to default to dialing 911 if no user-specified emergency contact number is saved, ensuring there is always a number to call in case of a crash.
+- Discovered through performance testing that the notifier would remain active indefinitely without user action after a crash signal, halting the emergency response process.
+- Introduced a countdown mechanism that activates upon receiving a crash signal. Configured the app to automatically place an emergency call to the predefined number (or 911 if no number is set) if no user input is detected by the end of the countdown.
+
 ## Building the BSafe components
 ### OnBoard project
 - To build the OnBoard project, you must first download the latest version of Code Composer Studio found here: https://www.ti.com/tool/download/CCSTUDIO/12.5.0.
