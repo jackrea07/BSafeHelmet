@@ -5,7 +5,7 @@ https://github.com/jackrea07/BSafeHelmet/tree/main
 Journal log is in the github repo!
 
 ## Link to Video Demos
-App: https://drive.google.com/file/d/1cn6J3K3kYjocIX6EqjkMuE9qkF_paQY-/view?usp=sharing
+App: 
 
 Helmet/Hardware: https://youtu.be/bsbsSCvr9zM
 
@@ -37,8 +37,8 @@ Mobile App (pairs to helmet via bluetooth)
 - Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
 
 ### App/Bluetooth
-- Difficulty reading crash signal data when sent by ESP device.
-
+- Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually.
+  
 ## Work Completed for Beta Build
 ### Helmet/Hardware
 
