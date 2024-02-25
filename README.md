@@ -4,6 +4,7 @@ https://github.com/jackrea07/BSafeHelmet/tree/main
 
 Journal log is in the github repo!
 
+PCB Repo: https://github.com/evanchang43/BSafeHelmetPCB
 ## Link to Video Demos
 App: https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing
 
@@ -41,7 +42,15 @@ Mobile App (pairs to helmet via bluetooth)
   
 ## Work Completed for Beta Build
 ### Helmet/Hardware
-
+- Re-evaluated sensor feasability. Discovered HC-SR04 timing needs to be at a precision level we were unable to maintain when moving the system into an RTOS
+- Researched and ordered LV-MaxSonar-EZ 1010 sensor. This sensor has two modes of communication, RS232 and analog voltage.
+- Attempted to implement UART communication with LV-MaxSonar-EZ 1010 sensor, discovered that RS232 communication protocol is inversed on the sensor.
+- Integrated level shifter with LV-MaxSonar-EZ 1010 sensor.
+- After implementing the level shifter, discovered UART consistently receives a page break interrupt, which results in the message failing.
+- Implemented ADC to read and convert the analog voltage output of the LV-MaxSonar-EZ 1010 sensor.
+- Finallized breadboard design and layout for use in creating PCB.
+- Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
+- Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
 ### Bluetooth/Software
 - Implemented improvements in the Bluetooth connection logic to stabilize the link between the BLE device and the phone.
 - Refined data handling processes to ensure accurate reception and processing of data sent by the ESP 32.
