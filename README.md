@@ -5,7 +5,7 @@ https://github.com/jackrea07/BSafeHelmet/tree/main
 Journal log is in the github repo!
 
 ## Link to Video Demos
-App: 
+App: https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing
 
 Helmet/Hardware: https://youtu.be/bsbsSCvr9zM
 
