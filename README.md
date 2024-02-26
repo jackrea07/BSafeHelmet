@@ -24,9 +24,10 @@ TIVA Launchpad (main programs and data parsing)
 - Gyroscope to aid in detecting crashes
 - GPIO interrupt on crash detection
   
-Bluetooth Module (bridge communication between mobile app and helmet hardware)
+ESP Module (bridge communication between mobile app and helmet hardware)
 - Send crash data to mobile phone to trigger emergency response
 - Receive audio data from phone and play through helmet speakers
+- Controls quality of life features like battery monitoring. 
 
 Mobile App (pairs to helmet via bluetooth)
 - Allows user to connect phone audio to helmet speakers for music
@@ -38,7 +39,10 @@ Mobile App (pairs to helmet via bluetooth)
 - Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
 
 ### App/Bluetooth
-- Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually.
+- Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually. May need to send BT notification signal to app from the ESP.
+
+### Misc
+- Speaker setup is unideal and needs an amplifier to work with speakers. Volume control is not implemented yet.
   
 ## Work Completed for Beta Build
 ### Helmet/Hardware
@@ -51,6 +55,8 @@ Mobile App (pairs to helmet via bluetooth)
 - Finallized breadboard design and layout for use in creating PCB.
 - Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
 - Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
+- ESP audio outputs to an external i2s DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
+- Tested amperage through the circuit with a digital multimeter, the hardware setup as of 2/23 drew approx. 270mA on average. Note that our power providing chip can handle at most 500mA and we have not connected amplified speakers yet.
 ### Bluetooth/Software
 - Implemented improvements in the Bluetooth connection logic to stabilize the link between the BLE device and the phone.
 - Refined data handling processes to ensure accurate reception and processing of data sent by the ESP 32.
@@ -58,6 +64,7 @@ Mobile App (pairs to helmet via bluetooth)
 - Modified the app's logic to default to dialing 911 if no user-specified emergency contact number is saved, ensuring there is always a number to call in case of a crash.
 - Discovered through performance testing that the notifier would remain active indefinitely without user action after a crash signal, halting the emergency response process.
 - Introduced a countdown mechanism that activates upon receiving a crash signal. Configured the app to automatically place an emergency call to the predefined number (or 911 if no number is set) if no user input is detected by the end of the countdown.
+- Bluetooth audio implemented on the ESP32 using an A2DP sink, can connect/use the ESP as you would any bluetooth speaker.
 
 ## Building the BSafe components
 ### OnBoard project
