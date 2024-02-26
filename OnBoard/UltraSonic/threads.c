@@ -123,11 +123,11 @@ void Ultrasonic_Thread(void){
         }
         else
         {
-            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, 0);
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, 0);
             count0 = 0;
         }
         if(count0 > 25){
-            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_PIN_2);
+            GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_PIN_4);
             count0 = 0;
         }
         //////////////////////////////////////////////////
@@ -136,7 +136,6 @@ void Ultrasonic_Thread(void){
         ADCIntClear(ADC1_BASE, 3);
         ADCSequenceDataGet(ADC1_BASE, 3, ADC1Values);
         distance1 = ((((float)ADC1Values[0])/1029)*1000)/9.8;
-        count1++;
         //UARTprintf("second: %d\n", (int32_t)distance1);
         //if(distance1 < 80){
         if(distance1 < 80){

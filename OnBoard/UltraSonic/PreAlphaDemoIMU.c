@@ -37,22 +37,13 @@ void Timers_Init(void){
 
 void GPIO_Init(void){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2);
     GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_3);
-    //GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
-    // Set the PA2 port as Input with a weak Pull-down. Echo Pin
-    //GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2);
-    //GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
-    // Configure and enable the Interrupt on both edges for PA2. Echo Pin
-    //IntEnable(INT_GPIOA);
-    //IntRegister(INT_GPIOA, PortAIntHandler);
-    //GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2, GPIO_RISING_EDGE);
-    //GPIOIntEnable(GPIO_PORTA_BASE, GPIO_INT_PIN_2);
+    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_2);
     GPIOPadConfigSet(GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPD);
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_2, 0);
-    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2, 0);
+    GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_4, 0);
     GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, 0);
 }
 
