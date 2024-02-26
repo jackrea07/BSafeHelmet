@@ -36,7 +36,7 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
+- Inconsisent ultrasonic readings at exact specified threshold. 
 
 ### App/Bluetooth
 - Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually. May need to send BT notification signal to app from the ESP.
