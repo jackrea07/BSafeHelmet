@@ -42,7 +42,7 @@ Mobile App (pairs to helmet via bluetooth)
 - Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually. May need to send BT notification signal to app from the ESP.
 
 ### Misc
-- Speaker setup is unideal and needs an amplifier to work with speakers. Volume control is not implemented yet.
+- Speaker setup is unideal and needs an amplifier. Volume control is not implemented yet, but the ESP recieves volume information.
   
 ## Work Completed for Beta Build
 ### Helmet/Hardware
@@ -57,7 +57,7 @@ Mobile App (pairs to helmet via bluetooth)
 - Finallized breadboard design and layout for use in creating PCB.
 - Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
 - Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
-- ESP audio outputs to an external i2s DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
+- ESP audio outputs to an external I2S DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
 - Tested amperage through the circuit with a digital multimeter, the hardware setup as of 2/23 drew approx. 270mA on average. Note that our power providing chip can handle at most 500mA and we have not connected amplified speakers yet.
 ### Bluetooth/Software
 - Implemented improvements in the Bluetooth connection logic to stabilize the link between the BLE device and the phone.
