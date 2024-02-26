@@ -52,6 +52,8 @@ Mobile App (pairs to helmet via bluetooth)
 - Integrated level shifter with LV-MaxSonar-EZ 1010 sensor.
 - After implementing the level shifter, discovered UART consistently receives a page break interrupt, which results in the message failing.
 - Implemented ADC to read and convert the analog voltage output of the LV-MaxSonar-EZ 1010 sensor.
+- Determined sensors trigger consistent false positives, designed algorithm to require multiple consecutive "hit" signals before illuminating blind spot LED.
+- Researched motorcyle crash data. Scaled data down to 15mph crash and created g-force threshold for crash detection.
 - Finallized breadboard design and layout for use in creating PCB.
 - Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
 - Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
