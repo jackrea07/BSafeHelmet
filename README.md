@@ -8,7 +8,7 @@ PCB Repo: https://github.com/evanchang43/BSafeHelmetPCB
 ## Link to Video Demos
 App: https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing
 
-Helmet/Hardware: https://youtu.be/bsbsSCvr9zM
+Helmet/Hardware: https://youtu.be/3T6ek3lzZdU
 
 ## Project Description
 This project introduces a state-of-the-art smart helmet designed to significantly enhance the safety of motorcycle and moped riders. Equipped with advanced sensors, the helmet is capable of detecting objects in the rider's blind spots, alerting them through LED indicators integrated into the helmet. This feature is pivotal in preventing potential collisions by increasing situational awareness. Additionally, the helmet boasts Bluetooth connectivity, seamlessly pairing with a specialized mobile app. This app plays a crucial role in safety, offering live GPS tracking that displays the rider's current location on a map, ensuring they are always traceable during their journey.
