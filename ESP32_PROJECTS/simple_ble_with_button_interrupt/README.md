@@ -1,35 +1,12 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C6 | ESP32-H2 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- | -------- |
+BLUETOOTH & I2S BASED ON EXAMPLE PROJECT, readme for which follows:
 
-# _Sample project_
+| Supported Targets | ESP32 |
+| ----------------- | ----- |
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+ESP-IDF A2DP-GATTS_COEX demo
+======================
+This demo showcases APIs to create a GATT service and A2DP profile and demonstrates BLE and classic Bluetooth coexistence.
 
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
+The BLE GATT SERVER part of demo creates a GATT service and then starts advertising, waiting to be connected by a GATT client. After the program is started, the GATT client can discover a device named "ESP_COEX_BLE_DEMO". Once a connection is established, GATT client can read or write data to the device. Or GATT client can receive notification or indication data. 
 
-
-
-## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
-
-## Example folder contents
-
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
-
-Below is short explanation of remaining files in the project folder.
-
-```
-├── CMakeLists.txt
-├── main
-│   ├── CMakeLists.txt
-│   └── main.c
-└── README.md                  This is the file you are currently reading
-```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
+The classic bluetooth A2DP part of the demo implements Advanced Audio Distribution Profile to receive an audio stream. After the program is started, other bluetooth devices such as smart phones can discover a device named "ESP_COEX_A2DP_DEMO". Once a connection is established, audio data can be transmitted. This will be visible in the application log including a count of audio data packets.
