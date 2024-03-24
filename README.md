@@ -4,10 +4,11 @@ https://github.com/jackrea07/BSafeHelmet/tree/main
 
 Journal log is in the github repo!
 
+PCB Repo: https://github.com/evanchang43/BSafeHelmetPCB
 ## Link to Video Demos
-App: https://drive.google.com/file/d/1cn6J3K3kYjocIX6EqjkMuE9qkF_paQY-/view?usp=sharing
+App: https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing
 
-Helmet/Hardware: https://youtu.be/bsbsSCvr9zM
+Helmet/Hardware: https://youtu.be/3T6ek3lzZdU
 
 ## Project Description
 This project introduces a state-of-the-art smart helmet designed to significantly enhance the safety of motorcycle and moped riders. Equipped with advanced sensors, the helmet is capable of detecting objects in the rider's blind spots, alerting them through LED indicators integrated into the helmet. This feature is pivotal in preventing potential collisions by increasing situational awareness. Additionally, the helmet boasts Bluetooth connectivity, seamlessly pairing with a specialized mobile app. This app plays a crucial role in safety, offering live GPS tracking that displays the rider's current location on a map, ensuring they are always traceable during their journey.
@@ -23,9 +24,10 @@ TIVA Launchpad (main programs and data parsing)
 - Gyroscope to aid in detecting crashes
 - GPIO interrupt on crash detection
   
-Bluetooth Module (bridge communication between mobile app and helmet hardware)
+ESP Module (bridge communication between mobile app and helmet hardware)
 - Send crash data to mobile phone to trigger emergency response
 - Receive audio data from phone and play through helmet speakers
+- Controls quality of life features like battery monitoring. 
 
 Mobile App (pairs to helmet via bluetooth)
 - Allows user to connect phone audio to helmet speakers for music
@@ -34,10 +36,37 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- Outside of verified range HC-SR04 receives inconsitent data, currently mitagated by waiting for a valid read. 
+- Inconsisent ultrasonic readings at exact specified threshold. 
 
 ### App/Bluetooth
-- Difficulty reading crash signal data when sent by ESP device.
+- Crash response does not trigger properly upon reception of crash signal from ESP device and must be activated manually. May need to send BT notification signal to app from the ESP.
+
+### Misc
+- Speaker setup is unideal and needs an amplifier. Volume control is not implemented yet, but the ESP recieves volume information.
+  
+## Work Completed for Beta Build
+### Helmet/Hardware
+- Re-evaluated sensor feasability. Discovered HC-SR04 timing needs to be at a precision level we were unable to maintain when moving the system into an RTOS
+- Researched and ordered LV-MaxSonar-EZ 1010 sensor. This sensor has two modes of communication, RS232 and analog voltage.
+- Attempted to implement UART communication with LV-MaxSonar-EZ 1010 sensor, discovered that RS232 communication protocol is inversed on the sensor.
+- Integrated level shifter with LV-MaxSonar-EZ 1010 sensor.
+- After implementing the level shifter, discovered UART consistently receives a page break interrupt, which results in the message failing.
+- Implemented ADC to read and convert the analog voltage output of the LV-MaxSonar-EZ 1010 sensor.
+- Determined sensors trigger consistent false positives, designed algorithm to require multiple consecutive "hit" signals before illuminating blind spot LED.
+- Researched motorcyle crash data. Scaled data down to 15mph crash and created g-force threshold for crash detection.
+- Finallized breadboard design and layout for use in creating PCB.
+- Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
+- Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
+- ESP audio outputs to an external I2S DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
+- Tested amperage through the circuit with a digital multimeter, the hardware setup as of 2/23 drew approx. 270mA on average. Note that our power providing chip can handle at most 500mA and we have not connected amplified speakers yet.
+### Bluetooth/Software
+- Implemented improvements in the Bluetooth connection logic to stabilize the link between the BLE device and the phone.
+- Refined data handling processes to ensure accurate reception and processing of data sent by the ESP 32.
+- Performed extensive testing to map out and evaluate all user interface paths related to emergency contact settings.
+- Modified the app's logic to default to dialing 911 if no user-specified emergency contact number is saved, ensuring there is always a number to call in case of a crash.
+- Discovered through performance testing that the notifier would remain active indefinitely without user action after a crash signal, halting the emergency response process.
+- Introduced a countdown mechanism that activates upon receiving a crash signal. Configured the app to automatically place an emergency call to the predefined number (or 911 if no number is set) if no user input is detected by the end of the countdown.
+- Bluetooth audio implemented on the ESP32 using an A2DP sink, can connect/use the ESP as you would any bluetooth speaker.
 
 ## Building the BSafe components
 ### OnBoard project
