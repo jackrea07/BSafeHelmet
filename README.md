@@ -36,36 +36,22 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- Inconsisent ultrasonic readings at exact specified threshold. 
+- One buggy ultrasonic sensor, have determined it is not a software issue. Have ordered a new sensor, it is currently on its way.
 
 ### App/Bluetooth
 - bluetooth listview displays excessive null devices. Not necessarily wrong, just tedious to look through.
 
-### Misc
-- Speaker setup is unideal and needs an amplifier. Volume control is not implemented yet, but the ESP recieves volume information.
 ### Printed Circuit Board
 - The board was manufactured with multiple vias missing. The absence of these vias contributed to the lack of functionality in the audio module. 
 - The TIVA, while drawing the same amount of current as was allowed on the breadboard, heats in place after 5-10 minutes. The current diagnosis for this issue is that the current is not being managed correctly elsewhere on the board. 
 - Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively. 
 - One side of the helmet’s blind-spot detection does not work because of a faulty sensor. A replacement sensor has been ordered. 
+
 ## Work Completed for Release Candidate
 ### Helmet/Hardware
-- Re-evaluated sensor feasability. Discovered HC-SR04 timing needs to be at a precision level we were unable to maintain when moving the system into an RTOS
-- Researched and ordered LV-MaxSonar-EZ 1010 sensor. This sensor has two modes of communication, RS232 and analog voltage.
-- Attempted to implement UART communication with LV-MaxSonar-EZ 1010 sensor, discovered that RS232 communication protocol is inversed on the sensor.
-- Integrated level shifter with LV-MaxSonar-EZ 1010 sensor.
-- After implementing the level shifter, discovered UART consistently receives a page break interrupt, which results in the message failing.
-- Implemented ADC to read and convert the analog voltage output of the LV-MaxSonar-EZ 1010 sensor.
-- Determined sensors trigger consistent false positives, designed algorithm to require multiple consecutive "hit" signals before illuminating blind spot LED.
-- Researched motorcyle crash data. Scaled data down to 15mph crash and created g-force threshold for crash detection.
-- Finallized breadboard design and layout for use in creating PCB.
-- Attempted to implement designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium. Learned that Altium does not link footprints and symbols.
-- Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
-- ESP audio outputs to an external I2S DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
-- Tested amperage through the circuit with a digital multimeter, the hardware setup as of 2/23 drew approx. 270mA on average. Note that our power providing chip can handle at most 500mA and we have not connected amplified speakers yet.
 - Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
-- Conducted testing to establish root cause of failure on PCB.
+- Conducted thourough testing to establish root cause of failure on PCB.
 ### Bluetooth/Software
 - Condensed all app features into a single screen for streamlined navigation and improved user experience.
 - Enabled users to disconnect and reconnect to different Bluetooth devices seamlessly within the app.
