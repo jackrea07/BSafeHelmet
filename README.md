@@ -63,6 +63,7 @@ Mobile App (pairs to helmet via bluetooth)
 - Implemented designs for ESP32, Tiva Launchpad, voltage regulator,  LV-MaxSonar-EZ, and PCM audio devices in Altium.
 - ESP audio outputs to an external I2S DAC. This chip doesn't provide audio amplification but we can use 3.5mm earbuds to hear with reasonable quality.
 - Tested amperage through the circuit with a digital multimeter, the hardware setup as of 2/23 drew approx. 270mA on average. Note that our power providing chip can handle at most 500mA and we have not connected amplified speakers yet.
+- Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
 - Conducted testing to establish root cause of failure on PCB.
 ### Bluetooth/Software
