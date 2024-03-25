@@ -2,7 +2,8 @@
 ## Link to Repo
 https://github.com/jackrea07/BSafeHelmet/tree/main
 
-Journal log is in the github repo!
+## Link to Journal log
+https://docs.google.com/spreadsheets/d/1Mm9VA6NvYEt4OLsk81zikazPE4Yr7_iFd0ALAwPqtKs/edit#gid=786079556
 
 PCB Repo: https://github.com/evanchang43/BSafeHelmetPCB
 ## Link to Video Demos
