@@ -52,8 +52,8 @@ Mobile App (pairs to helmet via bluetooth)
 - Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
 - Conducted thourough testing to establish root cause of failure on PCB.
--- Link to PCB github repo: https://github.com/evanchang43/BSafeHelmetPCB
--- Link to parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW0RRCsKHnJEb6k7Q/edit?usp=sharing 
+-  Link to PCB github repo: https://github.com/evanchang43/BSafeHelmetPCB
+-  Link to parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW0RRCsKHnJEb6k7Q/edit?usp=sharing 
 ### Bluetooth/Software
 - Condensed all app features into a single screen for streamlined navigation and improved user experience.
 - Enabled users to disconnect and reconnect to different Bluetooth devices seamlessly within the app.
