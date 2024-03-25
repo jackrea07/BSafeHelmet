@@ -1,11 +1,13 @@
 # BSafeHelmet
 ## Link to Repo
-https://github.com/jackrea07/BSafeHelmet/tree/main
+repo: https://github.com/evanchang43/BSafeHelmetPCB
 
 ## Link to Journal log
 https://docs.google.com/spreadsheets/d/1Mm9VA6NvYEt4OLsk81zikazPE4Yr7_iFd0ALAwPqtKs/edit#gid=786079556
 
-PCB Repo: https://github.com/evanchang43/BSafeHelmetPCB
+## Link to PCB repo and parts list
+repo: https://github.com/evanchang43/BSafeHelmetPCB
+parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW0RRCsKHnJEb6k7Q/edit?usp=sharing
 ## Link to Video Demos
 App: https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing
 
@@ -53,8 +55,6 @@ Mobile App (pairs to helmet via bluetooth)
 - Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
 - Conducted thourough testing to establish root cause of failure on PCB.
--  Link to PCB github repo: https://github.com/evanchang43/BSafeHelmetPCB
--  Link to parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW0RRCsKHnJEb6k7Q/edit?usp=sharing 
 ### Bluetooth/Software
 - Condensed all app features into a single screen for streamlined navigation and improved user experience.
 - Enabled users to disconnect and reconnect to different Bluetooth devices seamlessly within the app.
