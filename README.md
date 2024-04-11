@@ -9,7 +9,7 @@ https://docs.google.com/spreadsheets/d/1Mm9VA6NvYEt4OLsk81zikazPE4Yr7_iFd0ALAwPq
 repo: https://github.com/evanchang43/BSafeHelmetPCB
 parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW0RRCsKHnJEb6k7Q/edit?usp=sharing
 ## Link to Video Demos
-App: [https://drive.google.com/file/d/1RnGf_oHPC9VafAtWeLwomjTPM84jExlQ/view?usp=sharing](https://drive.google.com/file/d/1QXDwblqulgg69Z8vqPtkhj0qdH7rbCG3/view?usp=sharing)
+App: https://drive.google.com/file/d/1CVPELUbIHSeBgOfuCflKBhTeMCscRv3y/view?usp=sharing
 
 Helmet/Hardware: https://youtu.be/3T6ek3lzZdU
 
