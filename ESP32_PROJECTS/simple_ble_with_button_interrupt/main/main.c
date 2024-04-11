@@ -165,7 +165,7 @@ void gpio_init(){
     gpio_set_direction(CRG_BUT_INPUT_PIN, GPIO_MODE_INPUT);
     gpio_pulldown_en(CRG_BUT_INPUT_PIN);
     gpio_pullup_dis(CRG_BUT_INPUT_PIN);
-    gpio_set_intr_type(CRG_BUT_INPUT_PIN, GPIO_INTR_POSEDGE);
+    gpio_set_intr_type(CRG_BUT_INPUT_PIN, GPIO_INTR_NEGEDGE);
 
     gpio_reset_pin(CRG_LED0);
     gpio_set_direction(CRG_LED0, GPIO_MODE_OUTPUT);

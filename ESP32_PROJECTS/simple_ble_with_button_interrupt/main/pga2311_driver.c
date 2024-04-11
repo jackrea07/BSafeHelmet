@@ -27,6 +27,7 @@ void volumeControl(void *params){
     }
 }
 */
+#define MINN 140
 void amp_init(){
 
     gpio_reset_pin(CONFIG_AMP_MUTE);
@@ -67,14 +68,14 @@ void amp_update_volume(uint8_t volume){
         N = 0;
     }
     else if(volume == 127){
-        N = 255;
+        N = MINN + 80;
     }
     else{
-        N = ((uint8_t)((volume / 127.0) * 80)) + 175;
+        N = ((uint8_t)((volume / 127.0) * 80)) + MINN;
     }
     printf("Volume: %d N: %d\n", (int)volume, (int)N);
     gpio_set_level(CONFIG_AMP_CS, 0);
-        for(int i = 0; i < 16; i++){
+        for(int i = 15; i >= 0; i--){
             gpio_set_level(CONFIG_AMP_SCLK, 0);
             gpio_set_level(CONFIG_AMP_SDI, 1 & (N >> (i%8)));
             gpio_set_level(CONFIG_AMP_SCLK, 1);

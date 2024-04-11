@@ -17,6 +17,7 @@
 #include "i2s_a2dp_handling.h"
 #include "driver/i2s_std.h"
 #include "freertos/ringbuf.h"
+#include "av_handling.c"
 
 
 #define RINGBUF_HIGHEST_WATER_LEVEL    (32 * 1024)

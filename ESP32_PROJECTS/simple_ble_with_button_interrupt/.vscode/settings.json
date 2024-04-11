@@ -6,6 +6,12 @@
     "queue.h": "c",
     "i2s_std.h": "c",
     "freertosconfig.h": "c",
-    "nvs_flash.h": "c"
-  }
+    "nvs_flash.h": "c",
+    "gpio.h": "c",
+    "freertos.h": "c"
+  },
+  "idf.openOcdConfigs": [
+    "interface/ftdi/esp32_devkitj_v1.cfg",
+    "target/esp32.cfg"
+  ]
 }
