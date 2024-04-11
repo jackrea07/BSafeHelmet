@@ -42,7 +42,7 @@ Mobile App (pairs to helmet via bluetooth)
 - One buggy ultrasonic sensor, have determined it is not a software issue. Have ordered a new sensor, it is currently on its way.
 
 ### App/Bluetooth
-- bluetooth listview displays excessive null devices. Not necessarily wrong, just tedious to look through.
+- None at the moment!
 
 ### Printed Circuit Board
 - The board was manufactured with multiple vias missing. The absence of these vias contributed to the lack of functionality in the audio module. 
