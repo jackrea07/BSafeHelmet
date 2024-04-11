@@ -50,17 +50,16 @@ Mobile App (pairs to helmet via bluetooth)
 - Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively. 
 - One side of the helmet’s blind-spot detection does not work because of a faulty sensor. A replacement sensor has been ordered. 
 
-## Work Completed for Release Candidate
+## Work Completed for Production Release
 ### Helmet/Hardware
 - Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
 - Conducted thourough testing to establish root cause of failure on PCB.
 ### Bluetooth/Software
-- Condensed all app features into a single screen for streamlined navigation and improved user experience.
-- Enabled users to disconnect and reconnect to different Bluetooth devices seamlessly within the app.
-- Integrated the option for users to restart the device search process if the initial connection attempt fails for any reason.
-- Implemented automated crash response system for swift emergency assistance without user intervention.
-- Updated crash response to automatically dial 911 by default in case of emergencies.
+- General UI changes and quality of life improvements.
+- Added product description and brand logo to profile page.
+- Fixed bug where bluetooth connection would disrupt if user switched pages prior to connection completing.
+- Cleaned up bluetooth device display to only show BSafe devices.
 - Added functionality to send text messages to both 911 and a user-specified emergency contact with the user's name and GPS location.
 
 ## Building the BSafe components
