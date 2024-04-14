@@ -39,13 +39,13 @@ Mobile App (pairs to helmet via bluetooth)
 
 ## Known Bugs
 ### Blind-Spot/Crash Detection
-- One buggy ultrasonic sensor, have determined it is not a software issue. Have ordered a new sensor, it is currently on its way.
+- None
 
 ### App/Bluetooth
-- None at the moment!
+- None
 
 ### Printed Circuit Board
-- Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively.  
+- Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively. A general work-around of changing the pins if they fail has been developed.
 
 ## Work Completed for Production Release
 ### Helmet/Hardware
