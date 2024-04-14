@@ -11,7 +11,7 @@ parts list: https://docs.google.com/spreadsheets/d/1Ij_14RiddeNyJEjv02iHXSV4uPIW
 ## Link to Video Demos
 App: https://drive.google.com/file/d/1fuTFZnjEL3Cb6rX_PFb6AShLxgxvSsbe/view?usp=sharing
 
-Helmet/Hardware: [https://youtu.be/3T6ek3lzZdU](https://drive.google.com/file/d/1wNLrKhoqzpPjQYoO0GldM3F3giuxvI6X/view?usp=sharing)
+Helmet/Hardware: [[https://youtu.be/3T6ek3lzZdU](https://drive.google.com/file/d/1wNLrKhoqzpPjQYoO0GldM3F3giuxvI6X/view?usp=sharing)](https://drive.google.com/file/d/1l5rLgFG-urjQLcC8aGLcLhQHImTRTtW3/view?usp=sharing)
 
 ## Project Description
 This project introduces a state-of-the-art smart helmet designed to significantly enhance the safety of motorcycle and moped riders. Equipped with advanced sensors, the helmet is capable of detecting objects in the rider's blind spots, alerting them through LED indicators integrated into the helmet. This feature is pivotal in preventing potential collisions by increasing situational awareness. Additionally, the helmet boasts Bluetooth connectivity, seamlessly pairing with a specialized mobile app. This app plays a crucial role in safety, offering live GPS tracking that displays the rider's current location on a map, ensuring they are always traceable during their journey.
