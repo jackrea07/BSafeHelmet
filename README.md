@@ -45,16 +45,16 @@ Mobile App (pairs to helmet via bluetooth)
 - None at the moment!
 
 ### Printed Circuit Board
-- The board was manufactured with multiple vias missing. The absence of these vias contributed to the lack of functionality in the audio module. 
-- The TIVA, while drawing the same amount of current as was allowed on the breadboard, heats in place after 5-10 minutes. The current diagnosis for this issue is that the current is not being managed correctly elsewhere on the board. 
-- Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively. 
-- One side of the helmet’s blind-spot detection does not work because of a faulty sensor. A replacement sensor has been ordered. 
+- Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively.  
 
 ## Work Completed for Production Release
 ### Helmet/Hardware
 - Conducted extensive false-positive and false-negative testing on crash detection algorithm.
 - Developed, ordered, and assembled printed circuit board.
 - Conducted thourough testing to establish root cause of failure on PCB.
+- Ordered and assembled second version of the PCB.
+- 3D printed case for the helmet.
+- Assembled all components of the helmet together.
 ### Bluetooth/Software
 - General UI changes and quality of life improvements.
 - Added product description and brand logo to profile page.
