@@ -42,10 +42,10 @@ Mobile App (pairs to helmet via bluetooth)
 - None
 
 ### App/Bluetooth
-- None
+- Last minute pivot to a different sound chip left no time to get volume control working properly. The current speakers are either fully on (1-100% volume) or off (0% volume). The fix requires a lot of ESP32 code digging. Volume control was working using the other speaker chips.
 
 ### Printed Circuit Board
-- Some (but not all) TIVA pins fail randomly. The current diagnosis for this issue is that the heating of the Tiva causes these pins to fail and behave unpredictably. As a result, while the crash detection algorithm is correctly identifying crashes during debugging, the signal pins used to communicate the crash are not working effectively. A general work-around of changing the pins if they fail has been developed.
+- PCB works fantastic but one LED is dim. It could be an incorrectly soldered jumper wire, a bad LED, or a problem with a TIVA pin. Will check it out next time im in class.
 
 ## Work Completed for Production Release
 ### Helmet/Hardware
