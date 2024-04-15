@@ -8,7 +8,9 @@
     "freertosconfig.h": "c",
     "nvs_flash.h": "c",
     "gpio.h": "c",
-    "freertos.h": "c"
+    "freertos.h": "c",
+    "semphr.h": "c",
+    "task.h": "c"
   },
   "idf.openOcdConfigs": [
     "interface/ftdi/esp32_devkitj_v1.cfg",

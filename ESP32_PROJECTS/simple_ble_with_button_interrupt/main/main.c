@@ -15,7 +15,7 @@
 #include "freertos/queue.h"
 #include "driver/gpio.h"
 #include "ble_handling.c"
-#include "pga2311_driver.h"
+#include "max_driver.h"
 #define CRASH_INPUT_TIVA CONFIG_CRASH_INPUT
 
 #define LED_PIN 2
@@ -95,9 +95,11 @@ void CRG_Reading(void *params)
     4.1 ~ 1400
     */
     int pinNumber;
+    int triggers = 0;
     while(true){
         if(xQueueReceive(altInteruptQueue, &pinNumber, portMAX_DELAY))
         {
+            triggers++;
             int loops = 10;
             int adc_raw;
             int adc_avg = 0;
@@ -124,8 +126,11 @@ void CRG_Reading(void *params)
             gpio_set_level(CRG_LED1, 0);
             gpio_set_level(CRG_LED2, 0);
             gpio_set_level(CRG_LED3, 0);
-
-            
+            if(triggers == 3){
+                uint8_t message[] = {'c','r','a','s','h'};
+                esp_ble_gatts_set_attr_value(gl_profile_tab[PROFILE_A_APP_ID].char_handle, sizeof(message),message);
+                gpio_set_level(LED_PIN, 1);
+            }           
         }
         
     }

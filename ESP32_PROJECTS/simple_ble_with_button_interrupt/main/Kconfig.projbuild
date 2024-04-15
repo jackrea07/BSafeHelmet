@@ -17,33 +17,15 @@ menu "BSafe Configuration"
         help
             GPIO number to use for I2S Data Driver.
 
-    config AMP_CS
-        int "AUDIO AMP CHIP SELECT"
-        default 16
-        help
-            GPIO number for active low CS, used when sending volume data
-    
-    config AMP_SCLK
-        int "AUDIO AMP SERIAL CLOCK"
-        default 5
-        help
-            GPIO number for SCLK, clock signal used when sending volume data
-        
-    config AMP_SDI
-        int "AUDIO AMP SERIAL DATA"
-        default 17
-        help
-            GPIO number for SDI, data signal used when sending volume data
-    
-    config AMP_MUTE
-        int "AUDIO AMP HW MUTE"
+    config MAX_SDMODE
+        int "MAX MODE GPIO"
         default 18
         help
-            GPIO number for HW mute, disables speaker output via hardware
+            GPIO number for MAX chips
         
     config CRG_BUTTON
         int "CHARGE BUTTON INPUT"
-        default 27
+        default 32
     
     config CRG_ADC
         int "ADC VBAT INPUT"
@@ -52,7 +34,7 @@ menu "BSafe Configuration"
             GIPO number for VBAT input pin.
     config CRG_LED0
         int "CHARGE LED0 OUTPUT"
-        default 26
+        default 33
         help 
             GPIO number for charge LED0 output, indicates charge > 25%
     
@@ -64,13 +46,13 @@ menu "BSafe Configuration"
     
     config CRG_LED2
         int "CHARGE LED2 OUTPUT"
-        default 33
+        default 26
         help 
             GPIO number for charge LED2 output, indicates charge > 75%
     
     config CRG_LED3
         int "CHARGE LED3 OUTPUT"
-        default 32
+        default 27
         help 
             GPIO number for charge LED3 output, indicates charge at 100%
         

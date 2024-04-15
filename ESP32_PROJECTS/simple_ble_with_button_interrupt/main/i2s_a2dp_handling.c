@@ -126,6 +126,18 @@ static void bt_i2s_task_handler(void *arg)
                 item_size = 0;
                 /* receive data from ringbuffer and write it to I2S DMA transmit buffer */
                 data = (uint8_t *)xRingbufferReceiveUpTo(s_ringbuf_i2s, &item_size, (TickType_t)pdMS_TO_TICKS(20), item_size_upto);
+                float volume_perc = s_volume/127.00;
+                /*if(item_size%2 == 0){
+                    for(int i = 0; i < item_size; i+=2){
+                        uint16_t temp = (data[i] << 8) + data[i+1];
+                        temp = temp * volume_perc;
+                        data[i] = (uint8_t)temp >> 8;
+                        data[i+1] = (uint8_t)temp;
+                    }
+                }*/
+                for(int i = 0; i < item_size; i+=2){
+                    data[i] = data[i] * 0.5;
+                }
                 if (item_size == 0) {
                     ESP_LOGI(BT_APP_CORE_TAG, "ringbuffer underflowed! mode changed: RINGBUFFER_MODE_PREFETCHING");
                     ringbuffer_mode = RINGBUFFER_MODE_PREFETCHING;

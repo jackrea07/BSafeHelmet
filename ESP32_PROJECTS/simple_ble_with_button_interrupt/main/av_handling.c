@@ -24,7 +24,7 @@
 #include "freertos/task.h"
 #include "driver/i2s_std.h"
 
-#include "pga2311_driver.h"
+#include "max_driver.h"
 #include "sys/lock.h"
 
 /* AVRCP used transaction labels */
