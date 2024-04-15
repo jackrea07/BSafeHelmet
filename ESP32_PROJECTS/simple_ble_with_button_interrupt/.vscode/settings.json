@@ -10,7 +10,10 @@
     "gpio.h": "c",
     "freertos.h": "c",
     "semphr.h": "c",
-    "task.h": "c"
+    "task.h": "c",
+    "i2s_periph.h": "c",
+    "gpio_hal.h": "c",
+    "i2s_hal.h": "c"
   },
   "idf.openOcdConfigs": [
     "interface/ftdi/esp32_devkitj_v1.cfg",

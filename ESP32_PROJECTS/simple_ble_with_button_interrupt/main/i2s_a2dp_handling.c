@@ -126,17 +126,26 @@ static void bt_i2s_task_handler(void *arg)
                 item_size = 0;
                 /* receive data from ringbuffer and write it to I2S DMA transmit buffer */
                 data = (uint8_t *)xRingbufferReceiveUpTo(s_ringbuf_i2s, &item_size, (TickType_t)pdMS_TO_TICKS(20), item_size_upto);
-                float volume_perc = s_volume/127.00;
-                /*if(item_size%2 == 0){
-                    for(int i = 0; i < item_size; i+=2){
-                        uint16_t temp = (data[i] << 8) + data[i+1];
-                        temp = temp * volume_perc;
-                        data[i] = (uint8_t)temp >> 8;
-                        data[i+1] = (uint8_t)temp;
-                    }
-                }*/
-                for(int i = 0; i < item_size; i+=2){
-                    data[i] = data[i] * 0.5;
+                
+                //the following volume code is entirely based on a solution at https://esp32.com/viewtopic.php?t=15505#p63213 accessed 4/15/2024
+                const int numBytesShifted = 2;
+                int16_t pcmData;
+                bool isNegative;
+                size_t h = 0;
+                uint8_t volume = 0;
+                if(s_volume > 10){
+                    volume = (uint8_t)(((s_volume - 10) / 127.0) * 16.0 + .5);
+                }
+                for (h = 0; h < item_size; h += numBytesShifted) {
+                    pcmData = ((uint16_t) data[h + 1] << 8) | data[h];
+                    isNegative = pcmData & 0x80;
+                    if (isNegative) 
+                        pcmData = (~pcmData) + 0x1;
+                    pcmData = pcmData >> (16 - volume);
+                    if (isNegative) 
+                        pcmData = (~pcmData) + 0x1;
+                    data[h+1] = pcmData >> 8;
+                    data[h] = pcmData;
                 }
                 if (item_size == 0) {
                     ESP_LOGI(BT_APP_CORE_TAG, "ringbuffer underflowed! mode changed: RINGBUFFER_MODE_PREFETCHING");
