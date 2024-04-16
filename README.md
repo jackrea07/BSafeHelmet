@@ -42,10 +42,10 @@ Mobile App (pairs to helmet via bluetooth)
 - None
 
 ### App/Bluetooth
-- Last minute pivot to a different sound chip left no time to get volume control working properly. The current speakers are either fully on (1-100% volume) or off (0% volume). The fix requires a lot of ESP32 code digging. Volume control was working using the other speaker chips.
+- RESOLVED ON 4/15 Last minute pivot to a different sound chip left no time to get volume control working properly. The current speakers are either fully on (1-100% volume) or off (0% volume). The fix requires a lot of ESP32 code digging. Volume control was working using the other speaker chips.
 
 ### Printed Circuit Board
-- PCB works fantastic but one LED is dim. It could be an incorrectly soldered jumper wire, a bad LED, or a problem with a TIVA pin. Will check it out next time im in class.
+- RESOLVED ON 4/15, it was the LED. PCB works fantastic but one LED is dim. It could be an incorrectly soldered jumper wire, a bad LED, or a problem with a TIVA pin. Will check it out next time im in class.
 
 ## Work Completed for Production Release
 ### Helmet/Hardware
